@@ -4,6 +4,8 @@ import torch
 import pandas as pd
 from skimage import io, transform
 import numpy as np
+import matplotlib
+matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from torch.utils.data import Dataset, DataLoader
 from torchvision import transforms, utils
@@ -41,3 +43,43 @@ class BookDataset(Dataset):
             sample = self.transform(sample)
 
         return sample
+
+class ToTensor(object):
+    """Convert ndarrays in sample to Tensors."""
+
+    def __call__(self, sample):
+        cover, title, label = sample['cover'], sample['title'], sample['class']
+
+        # swap color axis because
+        # numpy image: H x W x C
+        # torch image: C X H X W
+        cover = cover.transpose((2, 0, 1))
+        return {'cover': torch.from_numpy(cover).float(), 'title': title, 
+                'class': label}
+
+def create_data_loaders(train_csv_file, test_csv_file, image_dir, train_prop, 
+                       batch_size, num_workers = 1):
+    
+    transform = ToTensor()
+
+    train_set = BookDataset(train_csv_file, image_dir, transform)
+    test_set = BookDataset(test_csv_file, image_dir, transform)
+    
+    """
+    dataset_length = len(dataset)
+    
+    train_size = int(train_prop * dataset_length)
+    test_size = dataset_length - train_size
+
+    train_set, test_set = torch.utils.data.random_split(dataset, [train_size, 
+                                                                  test_size])
+    """
+    
+    data_loaders = {
+        "train": DataLoader(train_set, batch_size = batch_size, shuffle = True,
+                            num_workers = num_workers),
+        "test": DataLoader(test_set, batch_size = batch_size, shuffle = True, 
+                           num_workers = num_workers)
+    }
+
+    return data_loaders
