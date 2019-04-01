@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 from torch.utils.data import Dataset, DataLoader
 from torchvision import transforms, utils
 
-class BookDataset(Dataset):
+class BookCoverDataset(Dataset):
     """Book dataset."""
 
     def __init__(self, csv_file, image_dir, transform=None):
@@ -33,11 +33,20 @@ class BookDataset(Dataset):
         img_name = self.image_dir + '/' +  self.dataset.iloc[idx, 1]
         cover = io.imread(img_name)
         line = self.dataset.iloc[idx]
-        title = line["title"]
         id = line["class"]
-        sample = {'cover': cover, 'title' : title, 'class' : id}
+        sample = {'cover': cover, 'class' : id}
 
         if self.transform:
             sample = self.transform(sample)
 
         return sample
+
+    def get_classes(self):
+        return ["Arts & Photography", "Biographies & Memoirs", "Business & Money",
+        "Calendars", "Children's Books", "Comics & Graphic Novels", "Computers & Technology",
+        "Cookbooks, Food & Wine", "Crafts, Hobbies & Home", "Christian Books & Bibles",
+        "Engineering & Transportation", "Health, Fitness & Dieting", "History", "Humor & Entertainment",
+        "Law", "Literature & Fiction", "Medical Books", "Mystery, Thriller & Suspense", "Parenting & Relationships",
+        "Politics & Social Sciences", "Reference", "Religion & Spirituality", "Romance",
+        "Science & Math", "Science Fiction & Fantasy", "Self-Help", "Sports & Outdoors",
+        "Teen & Young Adult", "Test Preparation", "Travel"]
