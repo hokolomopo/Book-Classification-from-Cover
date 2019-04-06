@@ -1,39 +1,57 @@
+"""
+Transfer Learning Tutorial
+==========================
+**Author**: `Sasank Chilamkurthy <https://chsasank.github.io>`_
+In this tutorial, you will learn how to train your network using
+transfer learning. You can read more about the transfer learning at `cs231n
+notes <https://cs231n.github.io/transfer-learning/>`__
+Quoting these notes,
+    In practice, very few people train an entire Convolutional Network
+    from scratch (with random initialization), because it is relatively
+    rare to have a dataset of sufficient size. Instead, it is common to
+    pretrain a ConvNet on a very large dataset (e.g. ImageNet, which
+    contains 1.2 million images with 1000 categories), and then use the
+    ConvNet either as an initialization or a fixed feature extractor for
+    the task of interest.
+These two major transfer learning scenarios look as follows:
+-  **Finetuning the convnet**: Instead of random initializaion, we
+   initialize the network with a pretrained network, like the one that is
+   trained on imagenet 1000 dataset. Rest of the training looks as
+   usual.
+-  **ConvNet as fixed feature extractor**: Here, we will freeze the weights
+   for all of the network except that of the final fully connected
+   layer. This last fully connected layer is replaced with a new one
+   with random weights and only this layer is trained.
+"""
+# License: BSD
+# Author: Sasank Chilamkurthy
+
+from __future__ import print_function, division
+
 import torch
-import torchvision
-import torchvision.transforms as transforms
-import matplotlib.pyplot as plt
+import torch.nn as nn
+import torch.optim as optim
+from torch.optim import lr_scheduler
 import numpy as np
+import torchvision
+from torchvision import datasets, models, transforms
+import matplotlib.pyplot as plt
+import time
+import os
+import copy
 
+from bookDataset import *
 
-def imshow(img):
-    img = img / 2 + 0.5     # unnormalize
-    npimg = img.numpy()
-    plt.imshow(np.transpose(npimg, (1, 2, 0)))
-    plt.show()
-    
 if __name__ == "__main__":
-    transform = transforms.Compose(
-        [transforms.ToTensor(),
-        transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
+    trainCsvPath = "dataset/book30-listing-train.csv"
+    testCsvPath = "dataset/book30-listing-test.csv"
+    coverPath = "dataset/covers"
 
-    trainset = torchvision.datasets.CIFAR10(root='./data', train=True,
-                                            download=True, transform=transform)
-    trainloader = torch.utils.data.DataLoader(trainset, batch_size=4,
-                                            shuffle=True, num_workers=2)
+    #Create dataset
+    dataset = BookDataset(trainCsvPath, coverPath)
+    df3 = dataset.dataset
+    df3 = df3.reset_index().drop_duplicates(subset='class', keep='last').set_index('index')
+    df3 = df3.sort_values(by=['class'])
+    names = df3['class_name'].tolist()
 
-    testset = torchvision.datasets.CIFAR10(root='./data', train=False,
-                                        download=True, transform=transform)
-    testloader = torch.utils.data.DataLoader(testset, batch_size=4,
-                                            shuffle=False, num_workers=2)
-
-    classes = ('plane', 'car', 'bird', 'cat',
-            'deer', 'dog', 'frog', 'horse', 'ship', 'truck')
-
-    # get some random training images
-    dataiter = iter(trainloader)
-    images, labels = dataiter.next()
-
-    # show images
-    imshow(torchvision.utils.make_grid(images))
-    # print labels
-    print(' '.join('%5s' % classes[labels[j]] for j in range(4)))
+    print(df3)

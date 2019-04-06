@@ -16,7 +16,8 @@ import torch.optim as optim
 import torch.nn as nn
 from torch.optim import lr_scheduler
 
-from bookDataset import BookCoverDataset
+from bookDataset import BookDataset
+from image_processing import *
 
 def train_model(model, criterion, optimizer, scheduler, dataloaders, num_epochs=25):
     since = time.time()
@@ -40,7 +41,11 @@ def train_model(model, criterion, optimizer, scheduler, dataloaders, num_epochs=
             running_corrects = 0
 
             # Iterate over data.
-            for inputs, labels in dataloaders[phase]:
+            # for inputs, labels in dataloaders[phase]:
+            for i, batch in enumerate(dataloaders[phase]):
+                inputs = batch["cover"]
+                labels = batch["class"]
+
                 inputs = inputs.to(device)
                 labels = labels.to(device)
 
@@ -87,20 +92,18 @@ def train_model(model, criterion, optimizer, scheduler, dataloaders, num_epochs=
 
 
 if __name__ == "__main__":
-    trainCsvPath = "dataset/book30-listing-train.csv"
-    testCsvPath = "dataset/book30-listing-test.csv"
-    coverPath = "dataset/covers"
+    train_csv_path = "dataset/book30-listing-train.csv"
+    test_csv_path = "dataset/book30-listing-test.csv"
+    cover_path = "dataset/covers"
 
-    #Create dataset
-    trainSet = BookCoverDataset(trainCsvPath, coverPath)
-    testSet = BookCoverDataset(trainCsvPath, coverPath)
+    transforms.Compose([
+        transforms.RandomResizedCrop(224),
+        transforms.RandomHorizontalFlip(),
+        transforms.ToTensor(),
+    ])
 
-
-    #testing stuff
-    print(trainSet.dataset.head(3))
-
-    trainloader = torch.utils.data.DataLoader(trainSet, batch_size=4,
-                                            shuffle=True, num_workers=2)
+    data_loaders = create_data_loaders(train_csv_path, test_csv_path, 
+									   cover_path, None, 4, num_workers = 4)
 
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
@@ -124,7 +127,7 @@ if __name__ == "__main__":
     exp_lr_scheduler = lr_scheduler.StepLR(optimizer_conv, step_size=7, gamma=0.1)
 
     model_conv = train_model(model_conv, criterion, optimizer_conv,
-                            exp_lr_scheduler, trainloader, num_epochs=25)
+                            exp_lr_scheduler, data_loaders, num_epochs=25)
 
     # get some random training images
     dataiter = iter(trainloader)

@@ -4,11 +4,12 @@ import torch
 import pandas as pd
 from skimage import io, transform
 import numpy as np
-import matplotlib.pyplot as plt
 from torch.utils.data import Dataset, DataLoader
 from torchvision import transforms, utils
+from PIL import Image
 
-class BookCoverDataset(Dataset):
+
+class BookDataset(Dataset):
     """Book dataset."""
 
     def __init__(self, csv_file, image_dir, transform=None):
@@ -26,27 +27,39 @@ class BookCoverDataset(Dataset):
         self.image_dir = image_dir
         self.transform = transform
 
+        #Create list of classes
+        df = self.dataset.reset_index().drop_duplicates(subset='class', keep='last').set_index('index')
+        df = df.sort_values(by=['class'])
+        self.classes = df['class_name'].tolist()
+
     def __len__(self):
         return len(self.dataset)
 
     def __getitem__(self, idx):
         img_name = self.image_dir + '/' +  self.dataset.iloc[idx, 1]
-        cover = io.imread(img_name)
+        cover = Image.open(img_name)
         line = self.dataset.iloc[idx]
-        id = line["class"]
-        sample = {'cover': cover, 'class' : id}
+        title = line["title"]
+        label = line["class"]
+        # sample = {'cover': cover, 'title' : title, 'class' : id}
+        # sample = {'cover': cover, 'class' : label}
 
         if self.transform:
-            sample = self.transform(sample)
+            cover = self.transform(cover)
 
-        return sample
+        return (cover, label)
 
-    def get_classes(self):
-        return ["Arts & Photography", "Biographies & Memoirs", "Business & Money",
-        "Calendars", "Children's Books", "Comics & Graphic Novels", "Computers & Technology",
-        "Cookbooks, Food & Wine", "Crafts, Hobbies & Home", "Christian Books & Bibles",
-        "Engineering & Transportation", "Health, Fitness & Dieting", "History", "Humor & Entertainment",
-        "Law", "Literature & Fiction", "Medical Books", "Mystery, Thriller & Suspense", "Parenting & Relationships",
-        "Politics & Social Sciences", "Reference", "Religion & Spirituality", "Romance",
-        "Science & Math", "Science Fiction & Fantasy", "Self-Help", "Sports & Outdoors",
-        "Teen & Young Adult", "Test Preparation", "Travel"]
+def create_data_loaders(train_csv_file, test_csv_file, image_dir, transform, 
+                       batch_size, num_workers = 1):
+    
+    train_set = BookDataset(train_csv_file, image_dir, transform)
+    test_set = BookDataset(test_csv_file, image_dir, transform)
+        
+    data_loaders = {
+        "train": DataLoader(train_set, batch_size = batch_size, shuffle = True,
+                            num_workers = num_workers),
+        "test": DataLoader(test_set, batch_size = batch_size, shuffle = True, 
+                           num_workers = num_workers)
+    }
+
+    return data_loaders
