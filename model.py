@@ -26,6 +26,8 @@ def create_model():
 
 def validate_model(model, data_loaders):
 	NB_EPOCHS = 50
+	device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+	#torch.backends.cudnn.benchmark=True
 
 	losses = []
 
@@ -33,14 +35,16 @@ def validate_model(model, data_loaders):
 	criterion = nn.CrossEntropyLoss()
 
 	model.train()
+	model.to(device)
 
 	for epoch in range(NB_EPOCHS):
-		print("epoch")
+		print("epoch {}".format(epoch))
 		for i, batch in enumerate(data_loaders["train"]):
+			print("iteration {}".format(i))
 			input = batch["cover"]
-			print(type(input[0]))
-			print(input[0].size())
+			input = input.to(device)
 			label = batch["class"]
+			label = label.to(device)
 
 			pred = model(input)
 
@@ -66,6 +70,7 @@ if __name__ == "__main__":
 
 	print("creating model...")
 	model = create_model()
+	model
 	print("creating loaders...")
 	data_loaders = create_data_loaders(train_csv_path, test_csv_path, 
 									   cover_path, 0.8, 4)

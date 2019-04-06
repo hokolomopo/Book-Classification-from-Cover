@@ -77,9 +77,9 @@ def create_data_loaders(train_csv_file, test_csv_file, image_dir, train_prop,
     
     data_loaders = {
         "train": DataLoader(train_set, batch_size = batch_size, shuffle = True,
-                            num_workers = num_workers),
+                            num_workers = num_workers, pin_memory = True),
         "test": DataLoader(test_set, batch_size = batch_size, shuffle = True, 
-                           num_workers = num_workers)
+                           num_workers = num_workers, pin_memory = True)
     }
 
     return data_loaders
