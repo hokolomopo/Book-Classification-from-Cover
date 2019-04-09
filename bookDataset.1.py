@@ -6,8 +6,6 @@ from skimage import io, transform
 import numpy as np
 from torch.utils.data import Dataset, DataLoader
 from torchvision import transforms, utils
-from PIL import Image
-
 
 class BookDataset(Dataset):
     """Book dataset."""
@@ -23,45 +21,61 @@ class BookDataset(Dataset):
 
         cols = ["index", "filename", "url", "title", "author", "class", "class_name"]
         self.dataset = pd.read_csv(csv_file, header = None, names = cols, encoding = "ISO-8859-1")
-        # self.dataset = self.dataset.head(128)
-
 
         self.image_dir = image_dir
         self.transform = transform
-
-        #Create list of classes
-        df = self.dataset.reset_index().drop_duplicates(subset='class', keep='last').set_index('index')
-        df = df.sort_values(by=['class'])
-        self.classes = df['class_name'].tolist()
 
     def __len__(self):
         return len(self.dataset)
 
     def __getitem__(self, idx):
         img_name = self.image_dir + '/' +  self.dataset.iloc[idx, 1]
-        cover = Image.open(img_name)
+        cover = io.imread(img_name)
         line = self.dataset.iloc[idx]
         title = line["title"]
-        label = line["class"]
-        # sample = {'cover': cover, 'title' : title, 'class' : id}
-        # sample = {'cover': cover, 'class' : label}
+        id = line["class"]
+        sample = {'cover': cover, 'title' : title, 'class' : id}
 
         if self.transform:
-            cover = self.transform(cover)
+            sample = self.transform(sample)
 
-        return (cover, label)
+        return sample
 
-def create_data_loaders(train_csv_file, test_csv_file, image_dir, transform, 
+class ToTensor(object):
+    """Convert ndarrays in sample to Tensors."""
+
+    def __call__(self, sample):
+        cover, title, label = sample['cover'], sample['title'], sample['class']
+
+        # swap color axis because
+        # numpy image: H x W x C
+        # torch image: C X H X W
+        cover = cover.transpose((2, 0, 1))
+        return {'cover': torch.from_numpy(cover).float(), 'title': title, 
+                'class': label}
+
+def create_data_loaders(train_csv_file, test_csv_file, image_dir, train_prop, 
                        batch_size, num_workers = 1):
     
+    transform = ToTensor()
+
     train_set = BookDataset(train_csv_file, image_dir, transform)
     test_set = BookDataset(test_csv_file, image_dir, transform)
-        
+    
+    """
+    dataset_length = len(dataset)
+    
+    train_size = int(train_prop * dataset_length)
+    test_size = dataset_length - train_size
+    train_set, test_set = torch.utils.data.random_split(dataset, [train_size, 
+                                                                  test_size])
+    """
+    
     data_loaders = {
         "train": DataLoader(train_set, batch_size = batch_size, shuffle = True,
-                            num_workers = num_workers),
+                            num_workers = num_workers, pin_memory = True),
         "test": DataLoader(test_set, batch_size = batch_size, shuffle = True, 
-                           num_workers = num_workers)
+                           num_workers = num_workers, pin_memory = True)
     }
 
     return data_loaders

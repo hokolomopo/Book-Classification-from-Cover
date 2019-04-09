@@ -5,7 +5,7 @@ import pandas as pd
 import torchvision
 from skimage import io, transform
 import numpy as np
-import matplotlib.pyplot as plt
+from matplotlib import pyplot as plt
 from torch.utils.data import Dataset, DataLoader
 from torchvision import transforms, utils, models
 import matplotlib.pyplot as plt
@@ -16,8 +16,7 @@ import torch.optim as optim
 import torch.nn as nn
 from torch.optim import lr_scheduler
 
-from bookDataset import BookDataset
-from image_processing import *
+from bookDataset import *
 
 def train_model(model, criterion, optimizer, scheduler, dataloaders, num_epochs=25):
     since = time.time()
@@ -139,6 +138,6 @@ if __name__ == "__main__":
     # # print labels
     # print(' '.join('%5s' % classes[labels[j]] for j in range(4)))
 
-    # item = trainSet.__getitem__(0)
-    # imgplot = plt.imshow(item["cover"])
-    # plt.show()
+    item = dataset.__getitem__(0)
+    imgplot = plt.imshow(item["cover"])
+    plt.savefig("test.png")

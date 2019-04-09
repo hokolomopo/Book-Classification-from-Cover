@@ -1,0 +1,20 @@
+Resnet18, batch size : 8, trained_layers : 10, n_outputs : 32
+train :  Epoch 0 ,accuracy : 0.0547, time 0m 16s
+train :  Epoch 1 ,accuracy : 0.1641, time 0m 11s
+val :  Epoch 0 ,accuracy : 0.0547, time 0m 15s
+val :  Epoch 1 ,accuracy : 0.0625, time 0m 10s
+Training complete in 0m 52s 
+Resnet18, batch size : 8, trained_layers : 10, n_outputs : 32
+train :  Epoch 0 ,accuracy : 0.0312, time 0m 13s
+val :  Epoch 0 ,accuracy : 0.0547, time 0m 10s
+Training complete in 0m 23s 
+Best val Acc: 0.054688 
+
+Resnet18, batch size : 8, trained_layers : 10, n_outputs : 32
+train :  Epoch 0 ,accuracy : 0.0391, time 0m 13s
+train :  Epoch 1 ,accuracy : 0.2188, time 0m 11s
+val :  Epoch 0 ,accuracy : 0.0469, time 0m 11s
+val :  Epoch 1 ,accuracy : 0.0547, time 0m 10s
+Training complete in 0m 45s 
+Best val Acc: 0.054688 
+

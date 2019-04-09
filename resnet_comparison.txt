@@ -1,0 +1,66 @@
+Resnet18, batch size : 8, trained_layers : 100, n_outputs : 32
+train :  Epoch 0 ,accuracy : 0.2018, time 7m 36s
+train :  Epoch 1 ,accuracy : 0.2686, time 7m 46s
+val :  Epoch 0 ,accuracy : 0.2570, time 0m 51s
+val :  Epoch 1 ,accuracy : 0.2661, time 0m 48s
+Training complete in 17m 1s 
+Best val Acc: 0.266140 
+
+Resnet18, batch size : 8, trained_layers : 1, n_outputs : 32
+train :  Epoch 0 ,accuracy : 0.1642, time 5m 51s
+train :  Epoch 1 ,accuracy : 0.1913, time 3m 51s
+val :  Epoch 0 ,accuracy : 0.2019, time 0m 47s
+val :  Epoch 1 ,accuracy : 0.1986, time 0m 46s
+Training complete in 11m 15s 
+Best val Acc: 0.201930 
+
+Resnet101, batch size : 8, trained_layers : 10, n_outputs : 32
+train :  Epoch 0 ,accuracy : 0.2149, time 32m 6s
+train :  Epoch 1 ,accuracy : 0.2981, time 31m 49s
+val :  Epoch 0 ,accuracy : 0.2747, time 1m 18s
+val :  Epoch 1 ,accuracy : 0.2974, time 1m 17s
+Training complete in 66m 31s 
+Best val Acc: 0.297368 
+
+Resnet50, batch size : 8, trained_layers : 10, n_outputs : 32
+train :  Epoch 0 ,accuracy : 0.2150, time 18m 4s
+train :  Epoch 1 ,accuracy : 0.2879, time 17m 57s
+val :  Epoch 0 ,accuracy : 0.2709, time 0m 54s
+val :  Epoch 1 ,accuracy : 0.2812, time 0m 54s
+Training complete in 37m 49s 
+Best val Acc: 0.281228 
+
+Resnet34, batch size : 8, trained_layers : 10, n_outputs : 32
+train :  Epoch 0 ,accuracy : 0.2066, time 12m 12s
+train :  Epoch 1 ,accuracy : 0.2827, time 12m 10s
+val :  Epoch 0 ,accuracy : 0.2688, time 0m 53s
+val :  Epoch 1 ,accuracy : 0.2796, time 0m 39s
+Training complete in 25m 55s 
+Best val Acc: 0.279649 
+
+Resnet18, batch size : 8, trained_layers : 10, n_outputs : 32
+train :  Epoch 0 ,accuracy : 0.2037, time 7m 27s
+train :  Epoch 1 ,accuracy : 0.2707, time 7m 33s
+val :  Epoch 0 ,accuracy : 0.2565, time 0m 54s
+val :  Epoch 1 ,accuracy : 0.2744, time 0m 54s
+Training complete in 16m 49s 
+Best val Acc: 0.274386 
+
+Resnet18, batch size : 8, trained_layers : 10, n_outputs : 32
+train :  Epoch 0 ,accuracy : 0.2022, time 7m 34s
+train :  Epoch 1 ,accuracy : 0.2709, time 7m 25s
+val :  Epoch 0 ,accuracy : 0.2498, time 0m 52s
+val :  Epoch 1 ,accuracy : 0.2611, time 0m 36s
+Training complete in 16m 27s 
+Best val Acc: 0.261053 
+
+Resnet18, batch size : 8, trained_layers : 10, n_outputs : 32
+train :  Epoch 0 ,accuracy : 0.2025, time 7m 24s
+train :  Epoch 1 ,accuracy : 0.2732, time 7m 22s
+val :  Epoch 0 ,accuracy : 0.2588, time 0m 54s
+val :  Epoch 1 ,accuracy : 0.2704, time 0m 52s
+Training complete in 16m 31s 
+Best val Acc: 0.270351 
+
+
+
