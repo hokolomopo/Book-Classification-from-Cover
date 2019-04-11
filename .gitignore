@@ -143,4 +143,4 @@ dmypy.json
 dataset/covers/*
 dataset/fastText/*
 data/*
-encoder/infersent2.pickle
+*.pickle

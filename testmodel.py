@@ -154,6 +154,7 @@ def train_model(model, dataloaders, dataset_sizes, batch_size, criterion, optimi
                 if(progress > 10 + lastPrint) or lastPrint == 0:
                     lastPrint = progress
                     print('Epoch {} : {:.2f}% time : {:.2f}'.format(epoch, progress, time.time() - start))
+                
                 inputs = inputs.to(device)
                 labels = labels.to(device)
 

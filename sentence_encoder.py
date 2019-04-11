@@ -1,12 +1,11 @@
 import nltk
-nltk.download('punkt')
 from models import InferSent
 from torch.utils.data import Dataset, DataLoader
 import torch
 import pandas as pd
 import pickle
 
-class BookDataset(Dataset):
+class TextBookDataset(Dataset):
 	"""Book dataset."""
 
 	def __init__(self, csv_file, datasetTransform = None, transform=None):
@@ -34,7 +33,7 @@ class BookDataset(Dataset):
 
 	def __getitem__(self, idx):
 		line = self.dataset.iloc[idx]
-		title = self.titles(idx)
+		title = self.titles[idx]
 		#title = line["title"]
 		label = line["class"]
 		# sample = {'cover': cover, 'title' : title, 'class' : id}
@@ -43,7 +42,7 @@ class BookDataset(Dataset):
 		if self.transform:
 			cover = self.transform(cover)
 
-		return {'title' : torch.from_numpy(title).float(), 'class' : label}
+		return (torch.from_numpy(title).float(), label)
 
 class SentenceEmbedding():
 
@@ -75,6 +74,7 @@ class SentenceEmbedding():
 
 	def transform_titles(self, dataset):
 		transformedTitles = self.infersent.encode(dataset['title'], tokenize=True)
+		print(transformedTitles.shape)
 		print(type(transformedTitles))
 		print(type(transformedTitles[0]))
 		return transformedTitles
@@ -82,24 +82,29 @@ class SentenceEmbedding():
 def create_text_data_loaders(train_csv_file, test_csv_file, batch_size, num_workers = 1):
 	datasetTransform = SentenceEmbedding([train_csv_file, test_csv_file])
 
-	train_set = BookDataset(train_csv_file, datasetTransform = datasetTransform)
-	test_set = BookDataset(test_csv_file, datasetTransform = datasetTransform)
+	print("creating datasets")
+	train_set = TextBookDataset(train_csv_file, datasetTransform = datasetTransform)
+	test_set = TextBookDataset(test_csv_file, datasetTransform = datasetTransform)
 
+	print("creating dataloaders")
 	data_loaders = {
 		"train": DataLoader(train_set, batch_size = batch_size, shuffle = True,
 							num_workers = num_workers),
-		#"test": DataLoader(test_set, batch_size = batch_size, shuffle = True, 
-		#				   num_workers = num_workers)
+		"val": DataLoader(test_set, batch_size = batch_size, shuffle = True, 
+						   num_workers = num_workers)
 	}
 
 	return data_loaders
 
-def save_text_data_loaders(train_csv_file, test_csv_file, pickle_file_name, batch_size, num_workers = 1):
+def save_text_data_loaders(train_csv_file, test_csv_file, pickle_file_name, batch_size, num_workers = 0):
 	data_loaders = create_text_data_loaders(train_csv_file, test_csv_file, batch_size, num_workers)
-	pickle.dump(data_loaders, pickle_file_name)
+	print("pickling dataloaders")
+	with open(pickle_file_name, "wb") as fp:
+		pickle.dump(data_loaders, fp)
 
 if __name__ == "__main__":
+	nltk.download('punkt')
 	train_csv_path = "dataset/book30-listing-train.csv"
 	test_csv_path = "dataset/book30-listing-test.csv"
 	pickle_file_name = "text_data_loaders.pickle"
-	save_text_data_loaders(train_csv_path, test_csv_path, pickle_file_name, 4, 4)
+	save_text_data_loaders(train_csv_path, test_csv_path, pickle_file_name, 4, 0)
