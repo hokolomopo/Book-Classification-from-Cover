@@ -4,6 +4,7 @@ from models import InferSent
 from torch.utils.data import Dataset, DataLoader
 import torch
 import pandas as pd
+import pickle
 
 class BookDataset(Dataset):
 	"""Book dataset."""
@@ -92,3 +93,13 @@ def create_text_data_loaders(train_csv_file, test_csv_file, batch_size, num_work
 	}
 
 	return data_loaders
+
+def save_text_data_loaders(train_csv_file, test_csv_file, pickle_file_name, batch_size, num_workers = 1):
+	data_loaders = create_text_data_loaders(train_csv_file, test_csv_file, batch_size, num_workers)
+	pickle.dump(data_loaders, pickle_file_name)
+
+if __name__ == "__main__":
+	train_csv_path = "dataset/book30-listing-train.csv"
+	test_csv_path = "dataset/book30-listing-test.csv"
+	pickle_file_name = "text_data_loaders.pickle"
+	save_text_data_loaders(train_csv_path, test_csv_path, pickle_file_name, 4, 4)
