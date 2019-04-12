@@ -122,7 +122,7 @@ def visualize_model(model, num_images=6):
                     return
         model.train(mode=was_training)
 
-def train_model(model, dataloaders, dataset_sizes, batch_size, criterion, optimizer, scheduler, num_epochs=25, device="cpu"):
+def train_model(model, dataloaders, dataset_sizes, batch_size, criterion, optimizer, scheduler = None, num_epochs=25, device="cpu"):
     since = time.time()
 
     best_model_wts = copy.deepcopy(model.state_dict())
@@ -137,7 +137,8 @@ def train_model(model, dataloaders, dataset_sizes, batch_size, criterion, optimi
         # Each epoch has a training and validation phase
         for phase in ['train', 'val']:
             if phase == 'train':
-                scheduler.step()
+                if scheduler:
+                    scheduler.step()
                 model.train()  # Set model to training mode
             else:
                 model.eval()   # Set model to evaluate mode

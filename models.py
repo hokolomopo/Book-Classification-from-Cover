@@ -115,6 +115,41 @@ class InferSent(nn.Module):
         print('Found %s(/%s) words with w2v vectors' % (len(word_vec), len(word_dict)))
         return word_vec
 
+    def filter_dataset(self, datasets, colname, Tokenize = True):
+        """
+        Added by ourselves
+        """
+
+        assert hasattr(self, 'w2v_path'), 'w2v path not set'
+        # create word_vec with w2v vectors
+        word_vec = {}
+        word_dict = {}
+
+        print("creating dic")
+        with open(self.w2v_path, encoding="utf-8") as f:
+            for line in f:
+                word, vec = line.split(' ', 1)
+                word_dict[word] = vec
+
+        def filter(title):
+            test_words = self.get_word_dict([title], Tokenize)
+            for word in test_words:
+                if word in word_dict:
+                    word_vec[word] = np.fromstring(word_dict[word], sep=' ')
+                else:
+                    return False
+
+            return True
+        
+        for i, dataset in enumerate(datasets):
+            print("dataset {}".format(i))
+            dataset['keep_row'] = dataset[colname].apply(filter)
+            dataset = dataset[dataset['keep_row'] == True]
+            dataset = dataset.drop('keep_row', axis = 1)
+            datasets[i] = dataset
+
+        return datasets
+
     def get_w2v_k(self, K):
         assert hasattr(self, 'w2v_path'), 'w2v path not set'
         # create word_vec with k first w2v vectors
@@ -139,6 +174,8 @@ class InferSent(nn.Module):
         word_dict = self.get_word_dict(sentences, tokenize)
         self.word_vec = self.get_w2v(word_dict)
         print('Vocab size : %s' % (len(self.word_vec)))
+
+        return self.word_vec
 
     # build w2v vocab with k most frequent words
     def build_vocab_k_words(self, K):

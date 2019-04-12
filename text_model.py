@@ -26,10 +26,9 @@ def test_text_model(model, data_loaders_file):
 
 	criterion = nn.CrossEntropyLoss()
 	optimizer = optim.Adam(model.parameters(), lr = 0.0001)
-	scheduler = exp_lr_scheduler = lr_scheduler.StepLR(optimizer, step_size=7, gamma=0.1)
 
 	print("train")
-	model, stats = train_model(model, data_loaders, dataset_sizes, BATCH_SIZE, criterion, optimizer, scheduler, EPOCHS, device)
+	model, stats = train_model(model, data_loaders, dataset_sizes, BATCH_SIZE, criterion, optimizer, num_epochs = EPOCHS, device = device)
 
 	print(stats)
 
