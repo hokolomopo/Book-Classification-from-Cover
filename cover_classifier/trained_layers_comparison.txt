@@ -1,0 +1,23 @@
+Resnet18, lr : 0.1, batch size : 8, trained_layers : 1, n_outputs : 32
+train :  Epoch 0 ,accuracy : 0.1642, time 5m 51s
+train :  Epoch 1 ,accuracy : 0.1913, time 3m 51s
+val :  Epoch 0 ,accuracy : 0.2019, time 0m 47s
+val :  Epoch 1 ,accuracy : 0.1986, time 0m 46s
+Training complete in 11m 15s 
+Best val Acc: 0.201930 
+
+Resnet18, lr : 0.1, batch size : 8, trained_layers : 10, n_outputs : 32
+train :  Epoch 0 ,accuracy : 0.2037, time 7m 27s
+train :  Epoch 1 ,accuracy : 0.2707, time 7m 33s
+val :  Epoch 0 ,accuracy : 0.2565, time 0m 54s
+val :  Epoch 1 ,accuracy : 0.2744, time 0m 54s
+Training complete in 16m 49s 
+Best val Acc: 0.274386 
+
+Resnet18, lr : 0.1, batch size : 8, trained_layers : 100, n_outputs : 32
+train :  Epoch 0 ,accuracy : 0.2018, time 7m 36s
+train :  Epoch 1 ,accuracy : 0.2686, time 7m 46s
+val :  Epoch 0 ,accuracy : 0.2570, time 0m 51s
+val :  Epoch 1 ,accuracy : 0.2661, time 0m 48s
+Training complete in 17m 1s 
+Best val Acc: 0.266140 

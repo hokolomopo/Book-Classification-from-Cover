@@ -1,0 +1,6 @@
+ReluDropoutSoftmax_Resnet18, lr : 0.0001, batch size : 64, trained_layers : 10, n_outputs : 30
+train :  Epoch 0 ,accuracy : 0.0703, time 0m 13s
+val :  Epoch 0 ,accuracy : 0.0234, time 0m 10s
+Training complete in 0m 24s 
+Best val Acc: 0.023438 
+

@@ -1,0 +1,276 @@
+dropout -> softmax
+Resnet18, batch size : 64, trained_layers : 10, n_outputs : 30
+train :  Epoch 0 ,accuracy : 0.1304, time 15m 57s
+train :  Epoch 1 ,accuracy : 0.1913, time 8m 30s
+train :  Epoch 2 ,accuracy : 0.2118, time 4m 40s
+train :  Epoch 3 ,accuracy : 0.2524, time 5m 42s
+train :  Epoch 4 ,accuracy : 0.2608, time 4m 41s
+train :  Epoch 5 ,accuracy : 0.2474, time 4m 39s
+train :  Epoch 6 ,accuracy : 0.2529, time 4m 41s
+train :  Epoch 7 ,accuracy : 0.2853, time 4m 41s
+train :  Epoch 8 ,accuracy : 0.2980, time 4m 41s
+train :  Epoch 9 ,accuracy : 0.2801, time 4m 41s
+train :  Epoch 10 ,accuracy : 0.2849, time 4m 41s
+train :  Epoch 11 ,accuracy : 0.3129, time 4m 41s
+train :  Epoch 12 ,accuracy : 0.3260, time 4m 41s
+train :  Epoch 13 ,accuracy : 0.3001, time 4m 41s
+train :  Epoch 14 ,accuracy : 0.3006, time 4m 41s
+train :  Epoch 15 ,accuracy : 0.3420, time 4m 34s
+train :  Epoch 16 ,accuracy : 0.3535, time 4m 35s
+train :  Epoch 17 ,accuracy : 0.3278, time 4m 39s
+train :  Epoch 18 ,accuracy : 0.3255, time 4m 38s
+train :  Epoch 19 ,accuracy : 0.3647, time 4m 38s
+train :  Epoch 20 ,accuracy : 0.3833, time 4m 40s
+train :  Epoch 21 ,accuracy : 0.3475, time 4m 39s
+train :  Epoch 22 ,accuracy : 0.3466, time 4m 39s
+train :  Epoch 23 ,accuracy : 0.3939, time 4m 39s
+train :  Epoch 24 ,accuracy : 0.4132, time 4m 41s
+val :  Epoch 0 ,accuracy : 0.2237, time 1m 24s
+val :  Epoch 1 ,accuracy : 0.2165, time 0m 24s
+val :  Epoch 2 ,accuracy : 0.2595, time 0m 25s
+val :  Epoch 3 ,accuracy : 0.2881, time 1m 29s
+val :  Epoch 4 ,accuracy : 0.2642, time 0m 23s
+val :  Epoch 5 ,accuracy : 0.2530, time 0m 24s
+val :  Epoch 6 ,accuracy : 0.2807, time 0m 24s
+val :  Epoch 7 ,accuracy : 0.2991, time 0m 23s
+val :  Epoch 8 ,accuracy : 0.2867, time 0m 23s
+val :  Epoch 9 ,accuracy : 0.2682, time 0m 23s
+val :  Epoch 10 ,accuracy : 0.2898, time 0m 23s
+val :  Epoch 11 ,accuracy : 0.3009, time 0m 23s
+val :  Epoch 12 ,accuracy : 0.2882, time 0m 23s
+val :  Epoch 13 ,accuracy : 0.2761, time 0m 24s
+val :  Epoch 14 ,accuracy : 0.2930, time 0m 23s
+val :  Epoch 15 ,accuracy : 0.2970, time 0m 22s
+val :  Epoch 16 ,accuracy : 0.2832, time 0m 26s
+val :  Epoch 17 ,accuracy : 0.2682, time 0m 24s
+val :  Epoch 18 ,accuracy : 0.2905, time 0m 24s
+val :  Epoch 19 ,accuracy : 0.3014, time 0m 24s
+val :  Epoch 20 ,accuracy : 0.2874, time 0m 24s
+val :  Epoch 21 ,accuracy : 0.2809, time 0m 24s
+val :  Epoch 22 ,accuracy : 0.2812, time 0m 24s
+val :  Epoch 23 ,accuracy : 0.2914, time 0m 24s
+val :  Epoch 24 ,accuracy : 0.2800, time 0m 24s
+Training complete in 144m 36s 
+Best val Acc: 0.301404 
+
+softmax
+Resnet18, batch size : 8, trained_layers : 10, n_outputs : 30
+train :  Epoch 0 ,accuracy : 0.1357, time 7m 4s
+train :  Epoch 1 ,accuracy : 0.1656, time 7m 6s
+train :  Epoch 2 ,accuracy : 0.1912, time 7m 4s
+train :  Epoch 3 ,accuracy : 0.2333, time 7m 4s
+train :  Epoch 4 ,accuracy : 0.2430, time 7m 4s
+train :  Epoch 5 ,accuracy : 0.2142, time 7m 4s
+train :  Epoch 6 ,accuracy : 0.2201, time 7m 4s
+train :  Epoch 7 ,accuracy : 0.2614, time 7m 4s
+train :  Epoch 8 ,accuracy : 0.2708, time 7m 3s
+train :  Epoch 9 ,accuracy : 0.2398, time 7m 4s
+train :  Epoch 10 ,accuracy : 0.2444, time 7m 4s
+train :  Epoch 11 ,accuracy : 0.2822, time 7m 2s
+train :  Epoch 12 ,accuracy : 0.2925, time 7m 1s
+train :  Epoch 13 ,accuracy : 0.2610, time 7m 2s
+train :  Epoch 14 ,accuracy : 0.2632, time 7m 1s
+train :  Epoch 15 ,accuracy : 0.3026, time 7m 2s
+train :  Epoch 16 ,accuracy : 0.3155, time 7m 1s
+train :  Epoch 17 ,accuracy : 0.2774, time 7m 1s
+train :  Epoch 18 ,accuracy : 0.2756, time 7m 3s
+train :  Epoch 19 ,accuracy : 0.3155, time 7m 3s
+train :  Epoch 20 ,accuracy : 0.3329, time 7m 1s
+train :  Epoch 21 ,accuracy : 0.2932, time 7m 3s
+train :  Epoch 22 ,accuracy : 0.2920, time 7m 3s
+train :  Epoch 23 ,accuracy : 0.3363, time 7m 3s
+train :  Epoch 24 ,accuracy : 0.3523, time 6m 60s
+val :  Epoch 0 ,accuracy : 0.1977, time 0m 23s
+val :  Epoch 1 ,accuracy : 0.2044, time 0m 24s
+val :  Epoch 2 ,accuracy : 0.2504, time 0m 24s
+val :  Epoch 3 ,accuracy : 0.2772, time 0m 24s
+val :  Epoch 4 ,accuracy : 0.2558, time 0m 24s
+val :  Epoch 5 ,accuracy : 0.2353, time 0m 24s
+val :  Epoch 6 ,accuracy : 0.2646, time 0m 23s
+val :  Epoch 7 ,accuracy : 0.2902, time 0m 23s
+val :  Epoch 8 ,accuracy : 0.2642, time 0m 24s
+val :  Epoch 9 ,accuracy : 0.2474, time 0m 24s
+val :  Epoch 10 ,accuracy : 0.2761, time 0m 24s
+val :  Epoch 11 ,accuracy : 0.2900, time 0m 24s
+val :  Epoch 12 ,accuracy : 0.2712, time 0m 24s
+val :  Epoch 13 ,accuracy : 0.2686, time 0m 24s
+val :  Epoch 14 ,accuracy : 0.2802, time 0m 24s
+val :  Epoch 15 ,accuracy : 0.2947, time 0m 24s
+val :  Epoch 16 ,accuracy : 0.2818, time 0m 23s
+val :  Epoch 17 ,accuracy : 0.2679, time 0m 24s
+val :  Epoch 18 ,accuracy : 0.2832, time 0m 24s
+val :  Epoch 19 ,accuracy : 0.2979, time 0m 24s
+val :  Epoch 20 ,accuracy : 0.2742, time 0m 23s
+val :  Epoch 21 ,accuracy : 0.2628, time 0m 24s
+val :  Epoch 22 ,accuracy : 0.2804, time 0m 24s
+val :  Epoch 23 ,accuracy : 0.2933, time 0m 24s
+val :  Epoch 24 ,accuracy : 0.2814, time 0m 23s
+Training complete in 186m 1s 
+Best val Acc: 0.297895 
+
+dropout -> softmax
+Resnet18, batch size : 8, trained_layers : 10, n_outputs : 30
+train :  Epoch 0 ,accuracy : 0.1342, time 15m 3s
+train :  Epoch 1 ,accuracy : 0.1586, time 7m 13s
+train :  Epoch 2 ,accuracy : 0.1937, time 7m 11s
+train :  Epoch 3 ,accuracy : 0.2332, time 7m 17s
+train :  Epoch 4 ,accuracy : 0.2447, time 7m 20s
+train :  Epoch 5 ,accuracy : 0.2162, time 7m 23s
+train :  Epoch 6 ,accuracy : 0.2232, time 7m 12s
+train :  Epoch 7 ,accuracy : 0.2580, time 7m 8s
+train :  Epoch 8 ,accuracy : 0.2724, time 7m 19s
+train :  Epoch 9 ,accuracy : 0.2441, time 9m 60s
+train :  Epoch 10 ,accuracy : 0.2450, time 7m 21s
+train :  Epoch 11 ,accuracy : 0.2802, time 7m 16s
+train :  Epoch 12 ,accuracy : 0.2932, time 7m 16s
+train :  Epoch 13 ,accuracy : 0.2607, time 7m 15s
+train :  Epoch 14 ,accuracy : 0.2606, time 7m 18s
+train :  Epoch 15 ,accuracy : 0.2992, time 7m 16s
+train :  Epoch 16 ,accuracy : 0.3126, time 7m 16s
+train :  Epoch 17 ,accuracy : 0.2783, time 7m 25s
+train :  Epoch 18 ,accuracy : 0.2741, time 7m 27s
+train :  Epoch 19 ,accuracy : 0.3132, time 7m 25s
+train :  Epoch 20 ,accuracy : 0.3309, time 8m 34s
+train :  Epoch 21 ,accuracy : 0.2926, time 10m 21s
+train :  Epoch 22 ,accuracy : 0.2932, time 7m 25s
+train :  Epoch 23 ,accuracy : 0.3399, time 7m 25s
+train :  Epoch 24 ,accuracy : 0.3509, time 7m 17s
+val :  Epoch 0 ,accuracy : 0.1970, time 1m 22s
+val :  Epoch 1 ,accuracy : 0.1919, time 0m 25s
+val :  Epoch 2 ,accuracy : 0.2446, time 0m 25s
+val :  Epoch 3 ,accuracy : 0.2726, time 0m 25s
+val :  Epoch 4 ,accuracy : 0.2598, time 0m 26s
+val :  Epoch 5 ,accuracy : 0.2304, time 0m 26s
+val :  Epoch 6 ,accuracy : 0.2668, time 0m 25s
+val :  Epoch 7 ,accuracy : 0.2851, time 0m 26s
+val :  Epoch 8 ,accuracy : 0.2679, time 0m 28s
+val :  Epoch 9 ,accuracy : 0.2456, time 1m 23s
+val :  Epoch 10 ,accuracy : 0.2719, time 0m 25s
+val :  Epoch 11 ,accuracy : 0.2911, time 0m 25s
+val :  Epoch 12 ,accuracy : 0.2686, time 0m 25s
+val :  Epoch 13 ,accuracy : 0.2623, time 0m 25s
+val :  Epoch 14 ,accuracy : 0.2747, time 0m 24s
+val :  Epoch 15 ,accuracy : 0.2909, time 0m 25s
+val :  Epoch 16 ,accuracy : 0.2826, time 0m 25s
+val :  Epoch 17 ,accuracy : 0.2596, time 0m 25s
+val :  Epoch 18 ,accuracy : 0.2823, time 0m 25s
+val :  Epoch 19 ,accuracy : 0.2998, time 0m 25s
+val :  Epoch 20 ,accuracy : 0.2796, time 1m 31s
+val :  Epoch 21 ,accuracy : 0.2639, time 1m 23s
+val :  Epoch 22 ,accuracy : 0.2860, time 0m 25s
+val :  Epoch 23 ,accuracy : 0.3005, time 0m 25s
+val :  Epoch 24 ,accuracy : 0.2804, time 0m 24s
+Training complete in 211m 49s 
+Best val Acc: 0.300526 
+
+Relu -> droput -> Softmax
+Resnet18, batch size : 64, trained_layers : 10, n_outputs : 30
+train :  Epoch 0 ,accuracy : 0.1105, time 12m 11s
+train :  Epoch 1 ,accuracy : 0.2030, time 4m 49s
+train :  Epoch 2 ,accuracy : 0.2296, time 4m 36s
+train :  Epoch 3 ,accuracy : 0.2600, time 6m 45s
+train :  Epoch 4 ,accuracy : 0.2721, time 4m 45s
+train :  Epoch 5 ,accuracy : 0.2545, time 4m 50s
+train :  Epoch 6 ,accuracy : 0.2624, time 4m 45s
+train :  Epoch 7 ,accuracy : 0.2929, time 4m 43s
+train :  Epoch 8 ,accuracy : 0.3014, time 4m 43s
+train :  Epoch 9 ,accuracy : 0.2847, time 4m 43s
+train :  Epoch 10 ,accuracy : 0.2845, time 4m 43s
+train :  Epoch 11 ,accuracy : 0.3127, time 4m 44s
+train :  Epoch 12 ,accuracy : 0.3286, time 4m 43s
+train :  Epoch 13 ,accuracy : 0.3001, time 4m 43s
+train :  Epoch 14 ,accuracy : 0.2976, time 4m 44s
+train :  Epoch 15 ,accuracy : 0.3397, time 4m 44s
+train :  Epoch 16 ,accuracy : 0.3509, time 4m 44s
+train :  Epoch 17 ,accuracy : 0.3238, time 4m 44s
+train :  Epoch 18 ,accuracy : 0.3204, time 4m 44s
+train :  Epoch 19 ,accuracy : 0.3591, time 4m 44s
+train :  Epoch 20 ,accuracy : 0.3735, time 4m 44s
+train :  Epoch 21 ,accuracy : 0.3387, time 4m 44s
+train :  Epoch 22 ,accuracy : 0.3356, time 4m 41s
+train :  Epoch 23 ,accuracy : 0.3839, time 4m 45s
+train :  Epoch 24 ,accuracy : 0.4030, time 5m 42s
+val :  Epoch 0 ,accuracy : 0.2018, time 1m 24s
+val :  Epoch 1 ,accuracy : 0.2416, time 0m 23s
+val :  Epoch 2 ,accuracy : 0.2661, time 0m 23s
+val :  Epoch 3 ,accuracy : 0.2874, time 0m 25s
+val :  Epoch 4 ,accuracy : 0.2809, time 0m 24s
+val :  Epoch 5 ,accuracy : 0.2723, time 0m 24s
+val :  Epoch 6 ,accuracy : 0.2791, time 0m 24s
+val :  Epoch 7 ,accuracy : 0.3007, time 0m 24s
+val :  Epoch 8 ,accuracy : 0.2881, time 0m 24s
+val :  Epoch 9 ,accuracy : 0.2767, time 0m 25s
+val :  Epoch 10 ,accuracy : 0.2826, time 0m 25s
+val :  Epoch 11 ,accuracy : 0.3053, time 0m 25s
+val :  Epoch 12 ,accuracy : 0.2907, time 0m 24s
+val :  Epoch 13 ,accuracy : 0.2798, time 0m 25s
+val :  Epoch 14 ,accuracy : 0.2900, time 0m 25s
+val :  Epoch 15 ,accuracy : 0.3018, time 0m 25s
+val :  Epoch 16 ,accuracy : 0.2954, time 0m 24s
+val :  Epoch 17 ,accuracy : 0.2791, time 0m 24s
+val :  Epoch 18 ,accuracy : 0.2884, time 0m 25s
+val :  Epoch 19 ,accuracy : 0.3063, time 0m 25s
+val :  Epoch 20 ,accuracy : 0.2946, time 0m 24s
+val :  Epoch 21 ,accuracy : 0.2747, time 0m 24s
+val :  Epoch 22 ,accuracy : 0.3004, time 0m 25s
+val :  Epoch 23 ,accuracy : 0.3019, time 0m 24s
+val :  Epoch 24 ,accuracy : 0.2804, time 1m 23s
+Training complete in 140m 52s 
+Best val Acc: 0.306316 
+
+
+Resnet18, batch size : 64, trained_layers : 10, n_outputs : 30
+train :  Epoch 0 ,accuracy : 0.1289, time 15m 22s
+train :  Epoch 1 ,accuracy : 0.1915, time 4m 51s
+train :  Epoch 2 ,accuracy : 0.2110, time 5m 1s
+train :  Epoch 3 ,accuracy : 0.2525, time 4m 59s
+train :  Epoch 4 ,accuracy : 0.2651, time 5m 1s
+train :  Epoch 5 ,accuracy : 0.2491, time 4m 58s
+train :  Epoch 6 ,accuracy : 0.2551, time 4m 59s
+train :  Epoch 7 ,accuracy : 0.2866, time 4m 57s
+train :  Epoch 8 ,accuracy : 0.2961, time 4m 59s
+train :  Epoch 9 ,accuracy : 0.2781, time 5m 2s
+train :  Epoch 10 ,accuracy : 0.2801, time 4m 48s
+train :  Epoch 11 ,accuracy : 0.3149, time 4m 52s
+train :  Epoch 12 ,accuracy : 0.3281, time 4m 49s
+train :  Epoch 13 ,accuracy : 0.3021, time 4m 50s
+train :  Epoch 14 ,accuracy : 0.3019, time 4m 47s
+train :  Epoch 15 ,accuracy : 0.3402, time 4m 49s
+train :  Epoch 16 ,accuracy : 0.3547, time 4m 50s
+train :  Epoch 17 ,accuracy : 0.3238, time 4m 50s
+train :  Epoch 18 ,accuracy : 0.3266, time 4m 43s
+train :  Epoch 19 ,accuracy : 0.3684, time 4m 34s
+train :  Epoch 20 ,accuracy : 0.3859, time 5m 4s
+train :  Epoch 21 ,accuracy : 0.3476, time 4m 50s
+train :  Epoch 22 ,accuracy : 0.3459, time 4m 48s
+train :  Epoch 23 ,accuracy : 0.3954, time 4m 51s
+train :  Epoch 24 ,accuracy : 0.4113, time 4m 42s
+val :  Epoch 0 ,accuracy : 0.2267, time 1m 24s
+val :  Epoch 1 ,accuracy : 0.2195, time 0m 29s
+val :  Epoch 2 ,accuracy : 0.2586, time 0m 29s
+val :  Epoch 3 ,accuracy : 0.2939, time 0m 29s
+val :  Epoch 4 ,accuracy : 0.2781, time 0m 29s
+val :  Epoch 5 ,accuracy : 0.2637, time 0m 29s
+val :  Epoch 6 ,accuracy : 0.2718, time 0m 29s
+val :  Epoch 7 ,accuracy : 0.2974, time 0m 30s
+val :  Epoch 8 ,accuracy : 0.2816, time 0m 29s
+val :  Epoch 9 ,accuracy : 0.2621, time 0m 27s
+val :  Epoch 10 ,accuracy : 0.2925, time 0m 27s
+val :  Epoch 11 ,accuracy : 0.3023, time 0m 27s
+val :  Epoch 12 ,accuracy : 0.2846, time 0m 26s
+val :  Epoch 13 ,accuracy : 0.2700, time 0m 25s
+val :  Epoch 14 ,accuracy : 0.2989, time 0m 26s
+val :  Epoch 15 ,accuracy : 0.3014, time 0m 26s
+val :  Epoch 16 ,accuracy : 0.2881, time 0m 25s
+val :  Epoch 17 ,accuracy : 0.2781, time 0m 25s
+val :  Epoch 18 ,accuracy : 0.2884, time 0m 23s
+val :  Epoch 19 ,accuracy : 0.2995, time 0m 23s
+val :  Epoch 20 ,accuracy : 0.2830, time 0m 26s
+val :  Epoch 21 ,accuracy : 0.2686, time 0m 26s
+val :  Epoch 22 ,accuracy : 0.2867, time 0m 26s
+val :  Epoch 23 ,accuracy : 0.2965, time 0m 26s
+val :  Epoch 24 ,accuracy : 0.2805, time 0m 25s
+Training complete in 144m 22s 
+Best val Acc: 0.302281 
+
+

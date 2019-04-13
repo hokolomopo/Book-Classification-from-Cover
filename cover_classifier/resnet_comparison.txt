@@ -1,0 +1,31 @@
+Resnet18, lr : 0.1, batch size : 8, trained_layers : 10, n_outputs : 32
+train :  Epoch 0 ,accuracy : 0.2037, time 7m 27s
+train :  Epoch 1 ,accuracy : 0.2707, time 7m 33s
+val :  Epoch 0 ,accuracy : 0.2565, time 0m 54s
+val :  Epoch 1 ,accuracy : 0.2744, time 0m 54s
+Training complete in 16m 49s 
+Best val Acc: 0.274386 
+
+Resnet34, lr : 0.1, batch size : 8, trained_layers : 10, n_outputs : 32
+train :  Epoch 0 ,accuracy : 0.2066, time 12m 12s
+train :  Epoch 1 ,accuracy : 0.2827, time 12m 10s
+val :  Epoch 0 ,accuracy : 0.2688, time 0m 53s
+val :  Epoch 1 ,accuracy : 0.2796, time 0m 39s
+Training complete in 25m 55s 
+Best val Acc: 0.279649 
+
+Resnet50, lr : 0.1, batch size : 8, trained_layers : 10, n_outputs : 32
+train :  Epoch 0 ,accuracy : 0.2150, time 18m 4s
+train :  Epoch 1 ,accuracy : 0.2879, time 17m 57s
+val :  Epoch 0 ,accuracy : 0.2709, time 0m 54s
+val :  Epoch 1 ,accuracy : 0.2812, time 0m 54s
+Training complete in 37m 49s 
+Best val Acc: 0.281228 
+
+Resnet101, lr : 0.1, batch size : 8, trained_layers : 10, n_outputs : 32
+train :  Epoch 0 ,accuracy : 0.2149, time 32m 6s
+train :  Epoch 1 ,accuracy : 0.2981, time 31m 49s
+val :  Epoch 0 ,accuracy : 0.2747, time 1m 18s
+val :  Epoch 1 ,accuracy : 0.2974, time 1m 17s
+Training complete in 66m 31s 
+Best val Acc: 0.297368 

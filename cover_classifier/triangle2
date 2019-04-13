@@ -1,0 +1,44 @@
+Resnet18, lr : 0.0001, batch size : 8, trained_layers : 10, n_outputs : 30
+train :  Epoch 0 ,accuracy : 0.1358, time 9m 8s
+train :  Epoch 1 ,accuracy : 0.1649, time 7m 35s
+train :  Epoch 2 ,accuracy : 0.1941, time 7m 52s
+train :  Epoch 3 ,accuracy : 0.2330, time 8m 17s
+train :  Epoch 4 ,accuracy : 0.2522, time 7m 57s
+train :  Epoch 5 ,accuracy : 0.2409, time 7m 55s
+train :  Epoch 6 ,accuracy : 0.2432, time 8m 3s
+train :  Epoch 7 ,accuracy : 0.2733, time 7m 53s
+train :  Epoch 8 ,accuracy : 0.2888, time 7m 60s
+train :  Epoch 9 ,accuracy : 0.2754, time 7m 49s
+train :  Epoch 10 ,accuracy : 0.2791, time 8m 2s
+train :  Epoch 11 ,accuracy : 0.3014, time 8m 3s
+train :  Epoch 12 ,accuracy : 0.3152, time 7m 45s
+train :  Epoch 13 ,accuracy : 0.3097, time 7m 36s
+train :  Epoch 14 ,accuracy : 0.3091, time 7m 47s
+train :  Epoch 15 ,accuracy : 0.3317, time 8m 11s
+train :  Epoch 16 ,accuracy : 0.3381, time 7m 54s
+train :  Epoch 17 ,accuracy : 0.3343, time 8m 5s
+train :  Epoch 18 ,accuracy : 0.3362, time 8m 3s
+train :  Epoch 19 ,accuracy : 0.3535, time 7m 32s
+val :  Epoch 0 ,accuracy : 0.1788, time 0m 50s
+val :  Epoch 1 ,accuracy : 0.2163, time 0m 49s
+val :  Epoch 2 ,accuracy : 0.2456, time 0m 47s
+val :  Epoch 3 ,accuracy : 0.2761, time 0m 47s
+val :  Epoch 4 ,accuracy : 0.2740, time 0m 33s
+val :  Epoch 5 ,accuracy : 0.2591, time 0m 33s
+val :  Epoch 6 ,accuracy : 0.2798, time 0m 32s
+val :  Epoch 7 ,accuracy : 0.2946, time 0m 32s
+val :  Epoch 8 ,accuracy : 0.2849, time 0m 33s
+val :  Epoch 9 ,accuracy : 0.2812, time 0m 33s
+val :  Epoch 10 ,accuracy : 0.2923, time 0m 32s
+val :  Epoch 11 ,accuracy : 0.2942, time 0m 34s
+val :  Epoch 12 ,accuracy : 0.2946, time 0m 30s
+val :  Epoch 13 ,accuracy : 0.2907, time 0m 31s
+val :  Epoch 14 ,accuracy : 0.2916, time 0m 45s
+val :  Epoch 15 ,accuracy : 0.2933, time 0m 45s
+val :  Epoch 16 ,accuracy : 0.2961, time 0m 45s
+val :  Epoch 17 ,accuracy : 0.2904, time 0m 32s
+val :  Epoch 18 ,accuracy : 0.2902, time 0m 32s
+val :  Epoch 19 ,accuracy : 0.2974, time 0m 31s
+Training complete in 171m 47s 
+Best val Acc: 0.297368 
+

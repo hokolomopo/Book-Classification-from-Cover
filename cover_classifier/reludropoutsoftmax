@@ -1,0 +1,214 @@
+Epoch 0/9
+----------
+Epoch 0 : lr 0.00010, 0.12% time : 10.51
+Epoch 0 : lr 0.00039, 10.23% time : 43.48
+Epoch 0 : lr 0.00069, 20.34% time : 71.69
+Epoch 0 : lr 0.00099, 30.44% time : 105.13
+Epoch 0 : lr 0.00129, 40.55% time : 136.54
+Epoch 0 : lr 0.00159, 50.65% time : 166.34
+Epoch 0 : lr 0.00188, 60.76% time : 196.24
+Epoch 0 : lr 0.00218, 70.86% time : 225.85
+Epoch 0 : lr 0.00248, 80.97% time : 256.28
+Epoch 0 : lr 0.00278, 91.07% time : 287.60
+train Loss: 3.2031 Acc: 0.1107
+Time taken : 315.33374643325806
+Epoch 0 : lr 0.00305, 1.12% time : 10.76
+Epoch 0 : lr 0.00305, 11.23% time : 13.93
+Epoch 0 : lr 0.00305, 21.33% time : 17.06
+Epoch 0 : lr 0.00305, 31.44% time : 20.31
+Epoch 0 : lr 0.00305, 41.54% time : 24.77
+Epoch 0 : lr 0.00305, 51.65% time : 28.12
+Epoch 0 : lr 0.00305, 61.75% time : 31.15
+Epoch 0 : lr 0.00305, 71.86% time : 34.54
+Epoch 0 : lr 0.00305, 81.96% time : 38.84
+Epoch 0 : lr 0.00305, 92.07% time : 42.25
+val Loss: 2.7922 Acc: 0.2189
+Time taken : 44.54936361312866
+
+Epoch 1/9
+----------
+Epoch 1 : lr 0.00305, 0.12% time : 10.33
+Epoch 1 : lr 0.00335, 10.23% time : 44.92
+Epoch 1 : lr 0.00364, 20.34% time : 80.56
+Epoch 1 : lr 0.00394, 30.44% time : 116.32
+Epoch 1 : lr 0.00424, 40.55% time : 151.74
+Epoch 1 : lr 0.00454, 50.65% time : 186.72
+Epoch 1 : lr 0.00484, 60.76% time : 221.57
+Epoch 1 : lr 0.00513, 70.86% time : 256.37
+Epoch 1 : lr 0.00543, 80.97% time : 288.51
+Epoch 1 : lr 0.00573, 91.07% time : 319.61
+train Loss: 2.8542 Acc: 0.2050
+Time taken : 348.7893879413605
+Epoch 1 : lr 0.00600, 1.12% time : 10.41
+Epoch 1 : lr 0.00600, 11.23% time : 11.90
+Epoch 1 : lr 0.00600, 21.33% time : 13.55
+Epoch 1 : lr 0.00600, 31.44% time : 15.02
+Epoch 1 : lr 0.00600, 41.54% time : 16.84
+Epoch 1 : lr 0.00600, 51.65% time : 18.44
+Epoch 1 : lr 0.00600, 61.75% time : 19.88
+Epoch 1 : lr 0.00600, 71.86% time : 21.42
+Epoch 1 : lr 0.00600, 81.96% time : 23.01
+Epoch 1 : lr 0.00600, 92.07% time : 24.52
+val Loss: 2.7036 Acc: 0.2491
+Time taken : 26.096851110458374
+
+Epoch 2/9
+----------
+Epoch 2 : lr 0.00600, 0.12% time : 10.56
+Epoch 2 : lr 0.00570, 10.23% time : 38.69
+Epoch 2 : lr 0.00540, 20.34% time : 72.68
+Epoch 2 : lr 0.00511, 30.44% time : 107.09
+Epoch 2 : lr 0.00481, 40.55% time : 141.44
+Epoch 2 : lr 0.00451, 50.65% time : 176.06
+Epoch 2 : lr 0.00421, 60.76% time : 209.22
+Epoch 2 : lr 0.00391, 70.86% time : 237.34
+Epoch 2 : lr 0.00362, 80.97% time : 265.71
+Epoch 2 : lr 0.00332, 91.07% time : 294.81
+train Loss: 2.7488 Acc: 0.2305
+Time taken : 324.88009548187256
+Epoch 2 : lr 0.00305, 1.12% time : 9.71
+Epoch 2 : lr 0.00305, 11.23% time : 11.02
+Epoch 2 : lr 0.00305, 21.33% time : 12.30
+Epoch 2 : lr 0.00305, 31.44% time : 13.57
+Epoch 2 : lr 0.00305, 41.54% time : 14.91
+Epoch 2 : lr 0.00305, 51.65% time : 16.20
+Epoch 2 : lr 0.00305, 61.75% time : 17.54
+Epoch 2 : lr 0.00305, 71.86% time : 18.80
+Epoch 2 : lr 0.00305, 81.96% time : 20.13
+Epoch 2 : lr 0.00305, 92.07% time : 21.58
+val Loss: 2.5827 Acc: 0.2689
+Time taken : 23.16784429550171
+
+Epoch 3/9
+----------
+Epoch 3 : lr 0.00305, 0.12% time : 10.57
+Epoch 3 : lr 0.00275, 10.23% time : 38.58
+Epoch 3 : lr 0.00245, 20.34% time : 66.35
+Epoch 3 : lr 0.00215, 30.44% time : 99.28
+Epoch 3 : lr 0.00186, 40.55% time : 132.03
+Epoch 3 : lr 0.00156, 50.65% time : 164.16
+Epoch 3 : lr 0.00126, 60.76% time : 191.97
+Epoch 3 : lr 0.00096, 70.86% time : 219.79
+Epoch 3 : lr 0.00066, 80.97% time : 247.54
+Epoch 3 : lr 0.00037, 91.07% time : 275.36
+train Loss: 2.6324 Acc: 0.2589
+Time taken : 302.6627962589264
+Epoch 3 : lr 0.00010, 1.12% time : 9.97
+Epoch 3 : lr 0.00010, 11.23% time : 11.24
+Epoch 3 : lr 0.00010, 21.33% time : 12.52
+Epoch 3 : lr 0.00010, 31.44% time : 13.76
+Epoch 3 : lr 0.00010, 41.54% time : 15.00
+Epoch 3 : lr 0.00010, 51.65% time : 16.26
+Epoch 3 : lr 0.00010, 61.75% time : 17.56
+Epoch 3 : lr 0.00010, 71.86% time : 18.82
+Epoch 3 : lr 0.00010, 81.96% time : 20.08
+Epoch 3 : lr 0.00010, 92.07% time : 21.34
+val Loss: 2.5140 Acc: 0.2896
+Time taken : 22.76847004890442
+
+Epoch 4/9
+----------
+Epoch 4 : lr 0.00010, 0.12% time : 10.55
+Epoch 4 : lr 0.00040, 10.23% time : 42.23
+Epoch 4 : lr 0.00070, 20.34% time : 71.37
+Epoch 4 : lr 0.00100, 30.44% time : 100.52
+Epoch 4 : lr 0.00130, 40.55% time : 129.34
+Epoch 4 : lr 0.00159, 50.65% time : 157.25
+Epoch 4 : lr 0.00189, 60.76% time : 185.50
+Epoch 4 : lr 0.00219, 70.86% time : 213.38
+Epoch 4 : lr 0.00249, 80.97% time : 241.13
+Epoch 4 : lr 0.00279, 91.07% time : 268.95
+train Loss: 2.5897 Acc: 0.2705
+Time taken : 294.18910789489746
+Epoch 4 : lr 0.00305, 1.12% time : 10.00
+Epoch 4 : lr 0.00305, 11.23% time : 11.28
+Epoch 4 : lr 0.00305, 21.33% time : 12.56
+Epoch 4 : lr 0.00305, 31.44% time : 13.85
+Epoch 4 : lr 0.00305, 41.54% time : 15.12
+Epoch 4 : lr 0.00305, 51.65% time : 16.39
+Epoch 4 : lr 0.00305, 61.75% time : 17.66
+Epoch 4 : lr 0.00305, 71.86% time : 18.92
+Epoch 4 : lr 0.00305, 81.96% time : 20.20
+Epoch 4 : lr 0.00305, 92.07% time : 21.46
+val Loss: 2.5434 Acc: 0.2830
+Time taken : 22.876959562301636
+
+Epoch 5/9
+----------
+Epoch 5 : lr 0.00305, 0.12% time : 10.56
+Epoch 5 : lr 0.00335, 10.23% time : 38.30
+Epoch 5 : lr 0.00365, 20.34% time : 66.05
+Epoch 5 : lr 0.00395, 30.44% time : 93.81
+Epoch 5 : lr 0.00425, 40.55% time : 121.60
+Epoch 5 : lr 0.00454, 50.65% time : 149.38
+Epoch 5 : lr 0.00484, 60.76% time : 177.40
+Epoch 5 : lr 0.00514, 70.86% time : 205.34
+Epoch 5 : lr 0.00544, 80.97% time : 233.04
+Epoch 5 : lr 0.00574, 91.07% time : 260.88
+train Loss: 2.6490 Acc: 0.2558
+Time taken : 286.17651414871216
+Epoch 5 : lr 0.00599, 1.12% time : 9.88
+Epoch 5 : lr 0.00599, 11.23% time : 11.23
+Epoch 5 : lr 0.00599, 21.33% time : 12.49
+Epoch 5 : lr 0.00599, 31.44% time : 13.77
+Epoch 5 : lr 0.00599, 41.54% time : 15.02
+Epoch 5 : lr 0.00599, 51.65% time : 16.31
+Epoch 5 : lr 0.00599, 61.75% time : 17.58
+Epoch 5 : lr 0.00599, 71.86% time : 18.84
+Epoch 5 : lr 0.00599, 81.96% time : 20.13
+Epoch 5 : lr 0.00599, 92.07% time : 21.40
+val Loss: 2.6090 Acc: 0.2684
+Time taken : 22.8170804977417
+
+Epoch 6/9
+----------
+Epoch 6 : lr 0.00599, 0.12% time : 10.63
+Epoch 6 : lr 0.00570, 10.23% time : 38.37
+Epoch 6 : lr 0.00540, 20.34% time : 66.15
+Epoch 6 : lr 0.00510, 30.44% time : 93.93
+Epoch 6 : lr 0.00480, 40.55% time : 121.76
+Epoch 6 : lr 0.00450, 50.65% time : 149.57
+Epoch 6 : lr 0.00421, 60.76% time : 177.41
+Epoch 6 : lr 0.00391, 70.86% time : 205.24
+Epoch 6 : lr 0.00361, 80.97% time : 233.07
+Epoch 6 : lr 0.00331, 91.07% time : 260.93
+train Loss: 2.6263 Acc: 0.2637
+Time taken : 287.49282717704773
+Epoch 6 : lr 0.00304, 1.12% time : 9.78
+Epoch 6 : lr 0.00304, 11.23% time : 11.09
+Epoch 6 : lr 0.00304, 21.33% time : 12.37
+Epoch 6 : lr 0.00304, 31.44% time : 13.66
+Epoch 6 : lr 0.00304, 41.54% time : 14.95
+Epoch 6 : lr 0.00304, 51.65% time : 16.25
+Epoch 6 : lr 0.00304, 61.75% time : 17.53
+Epoch 6 : lr 0.00304, 71.86% time : 18.86
+Epoch 6 : lr 0.00304, 81.96% time : 20.15
+Epoch 6 : lr 0.00304, 92.07% time : 21.42
+val Loss: 2.5315 Acc: 0.2835
+Time taken : 22.869680166244507
+
+Epoch 7/9
+----------
+Epoch 7 : lr 0.00304, 0.12% time : 10.33
+Epoch 7 : lr 0.00274, 10.23% time : 38.66
+Epoch 7 : lr 0.00245, 20.34% time : 67.03
+Epoch 7 : lr 0.00215, 30.44% time : 95.39
+Epoch 7 : lr 0.00185, 40.55% time : 123.73
+Epoch 7 : lr 0.00155, 50.65% time : 152.06
+Epoch 7 : lr 0.00125, 60.76% time : 180.42
+Epoch 7 : lr 0.00096, 70.86% time : 208.79
+Epoch 7 : lr 0.00066, 80.97% time : 237.29
+Epoch 7 : lr 0.00036, 91.07% time : 265.65
+train Loss: 2.5029 Acc: 0.2928
+Time taken : 291.3095417022705
+Epoch 7 : lr 0.00011, 1.12% time : 9.82
+Epoch 7 : lr 0.00011, 11.23% time : 11.12
+Epoch 7 : lr 0.00011, 21.33% time : 12.42
+Epoch 7 : lr 0.00011, 31.44% time : 13.74
+Epoch 7 : lr 0.00011, 41.54% time : 15.06
+Epoch 7 : lr 0.00011, 51.65% time : 16.36
+Epoch 7 : lr 0.00011, 61.75% time : 17.63
+Epoch 7 : lr 0.00011, 71.86% time : 18.93
+Epoch 7 : lr 0.00011, 81.96% time : 20.28
+Epoch 7 : lr 0.00011, 92.07% time : 21.57
+val Loss: 2.4784 Acc: 0.3028
