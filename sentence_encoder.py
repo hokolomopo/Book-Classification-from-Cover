@@ -38,7 +38,7 @@ class TextBookDataset(Dataset):
 		if self.transform:
 			cover = self.transform(cover)
 
-		return (torch.from_numpy(title).float(), int(label))
+		return (torch.from_numpy(title).float(), label)
 
 class SentenceEmbedding():
 
@@ -103,10 +103,6 @@ def save_text_data_loaders(train_csv_file, val_csv_path, test_csv_file, pickle_f
 
 if __name__ == "__main__":
 	nltk.download('punkt')
-	"""
-	train_csv_path = "dataset/book30-listing-train.csv"
-	val_csv_path = "dataset/book30-listing-test.csv"
-	"""
 	train_csv_path = "dataset/train_set_cleaned.csv"
 	val_csv_path = "dataset/validation_set_cleaned.csv"
 	test_csv_path = "dataset/book30-listing-test_cleaned.csv"
