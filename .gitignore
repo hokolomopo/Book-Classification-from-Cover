@@ -1,4 +1,4 @@
-
+﻿
 # Created by https://www.gitignore.io/api/python,visualstudiocode
 # Edit at https://www.gitignore.io/?templates=python,visualstudiocode
 
@@ -142,4 +142,6 @@ dmypy.json
 
 cover_classifier/dataset/covers/*
 dataset/covers/*
+dataset/fastText/*
 data/*
+*.pickle

@@ -2,6 +2,9 @@ from bookDataset import create_data_loaders
 import torch
 import torch.nn as nn
 import torchvision.models as models
+import matplotlib
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
 
 def create_model():
 	"""
@@ -17,16 +20,22 @@ def create_model():
 	model = nn.Sequential(*modules)
 	"""
 
-	model = models.resnet152(pretrained = True)
+	model = models.resnet18(pretrained = True)
 	numFeatures = model.fc.in_features
 	model.fc = nn.Linear(numFeatures, 32)
+
+	for param in model.parameters():
+		param.requires_grad = False
+
+	for param in model.fc.parameters():
+		param.requires_grad = True
 
 	return model
 
 def validate_model(model, data_loaders):
-	NB_EPOCHS = 50
+	NB_EPOCHS = 3
 	device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-	#torch.backends.cudnn.benchmark=True
+	torch.backends.cudnn.benchmark = True
 
 	losses = []
 
@@ -39,7 +48,9 @@ def validate_model(model, data_loaders):
 	for epoch in range(NB_EPOCHS):
 		print("epoch {}".format(epoch))
 		for i, batch in enumerate(data_loaders["train"]):
-			print("iteration {}".format(i))
+			if(i % 100 == 0):
+				print("iteration {}".format(i))
+				
 			input = batch["cover"]
 			input = input.to(device)
 			label = batch["class"]
@@ -72,6 +83,6 @@ if __name__ == "__main__":
 	model
 	print("creating loaders...")
 	data_loaders = create_data_loaders(train_csv_path, test_csv_path, 
-									   cover_path, 0.8, 4)
+									   cover_path, 0.8, 8, num_workers = 4)
 	print("validating model...")
 	validate_model(model, data_loaders)
