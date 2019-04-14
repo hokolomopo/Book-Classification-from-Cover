@@ -102,9 +102,11 @@ def save_text_data_loaders(train_csv_file, val_csv_path, test_csv_file, pickle_f
 		pickle.dump(data_loaders, fp)
 
 if __name__ == "__main__":
+	BTACH_SIZES = [4, 8, 16, 32, 64] 
 	nltk.download('punkt')
 	train_csv_path = "dataset/train_set_cleaned.csv"
 	val_csv_path = "dataset/validation_set_cleaned.csv"
 	test_csv_path = "dataset/book30-listing-test_cleaned.csv"
-	pickle_file_name = "dataloaders/encoded_text_data_loaders.pickle"
-	save_text_data_loaders(train_csv_path, val_csv_path, test_csv_path, pickle_file_name, 4, 0)
+	for batch_size in BTACH_SIZES:
+		pickle_file_name = "dataloaders/encoded_text_data_loaders_{}.pickle".format(batch_size)
+		save_text_data_loaders(train_csv_path, val_csv_path, test_csv_path, pickle_file_name, batch_size, 0)

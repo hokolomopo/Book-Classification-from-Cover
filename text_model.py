@@ -130,12 +130,10 @@ def load_data_loaders(data_loaders_file):
 
 	return data_loaders
 
-def test_text_model(model, data_loaders, model_num = ""):
-	BATCH_SIZE = 4
-	EPOCHS = 10
+def test_text_model(model, data_loaders, batch_size, epochs, model_num = ""):
+	MODEL_DIR = "text_models/"
 
 	device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-	model.to(device)
 	
 	dataset_sizes = {phase: len(data_loader.dataset) for phase, data_loader in data_loaders.items()}
 
@@ -143,44 +141,48 @@ def test_text_model(model, data_loaders, model_num = ""):
 	optimizer = optim.Adam(model.parameters(), lr = 0.0001)
 
 	print("train")
-	model, stats = train_model(model, data_loaders, dataset_sizes, BATCH_SIZE, criterion, optimizer, num_epochs = EPOCHS, device = device)
+	model, stats = train_model(model, data_loaders, dataset_sizes, batch_size, criterion, optimizer, num_epochs = epochs, device = device)
 
 	print(stats)
 
-	torch.save(model.state_dict(), "text_model"+ model_num + ".pt")
+	torch.save(model.state_dict(), MODEL_DIR + "text_model"+ model_num + ".pt")
 
 	return stats
 
-def compare_models(nb_inputs, nb_outputs, data_loaders_file):
+def compare_models(nb_inputs, nb_outputs):
 	try:
 		os.mkdir("plots_text_model")
 	except:
 		pass
 
 	PLOT_DIR = "plots_text_model/"
+	BATCH_SIZE = 4
+	EPOCHS = 20
+
+	data_loaders_file = "dataloaders/encoded_text_data_loaders_{}.pickle".format(BATCH_SIZE)
 
 	data_loaders = load_data_loaders(data_loaders_file)
 
-	models = [create_model_2(nb_inputs, nb_outputs),
-			  create_model_8(nb_inputs, nb_outputs),
-			  create_model_9(nb_inputs, nb_outputs),
-			  create_model_10(nb_inputs, nb_outputs)
+	models = [create_model_10(nb_inputs, nb_outputs),
+			  create_model_2(nb_inputs, nb_outputs),
+			  create_model_3(nb_inputs, nb_outputs),
+			  create_model_4(nb_inputs, nb_outputs),
+			  create_model_5(nb_inputs, nb_outputs)
 			 ]
 
-	model_nums = ["2", "8", "9", "10"]
+	model_nums = ["10", "2", "3", "4", "5"]
+	model_names = ["no hidden layer", "shallow", "shallow dropout", "deep", "deep dropout"]
 	title = "Compare models"
 	file_name = "compare_models"
 
-	for model, model_num in zip(models, model_nums):
+	for model, model_num, model_name in zip(models, model_nums, model_names):
 		print("model {}".format(model_num))
-		stats = test_text_model(model, data_loaders, model_num)
-		plt.plot(stats.epochs['val'],  stats.accuracies['val'], label="model {}".format(model_num))
-		title += " {}".format(model_num)
+		stats = test_text_model(model, data_loaders, BATCH_SIZE, EPOCHS, model_num)
+		plt.plot(stats.epochs['val'],  stats.accuracies['val'], label= model_name)
 		file_name += "_{}".format(model_num)
 
 	plt.xlabel('epoch')
 	plt.ylabel('Accuracy')
-	plt.title(title)
 	plt.grid(True)
 	plt.legend()
 	plt.savefig(PLOT_DIR + file_name + ".pdf")
@@ -188,10 +190,8 @@ def compare_models(nb_inputs, nb_outputs, data_loaders_file):
 if __name__ == "__main__":
 	NB_INPUTS = 4096
 	NB_OUTPUTS = 30
-
-	DATA_LOADERS_FILE = "dataloaders/text_data_loaders.pickle"
 	
-	compare_models(NB_INPUTS, NB_OUTPUTS, DATA_LOADERS_FILE)
+	compare_models(NB_INPUTS, NB_OUTPUTS)
 
 	
 	

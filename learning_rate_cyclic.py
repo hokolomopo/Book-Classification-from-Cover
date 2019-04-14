@@ -9,6 +9,8 @@ def train_model(model, dataloaders, dataset_sizes, batch_size, criterion, optimi
     stats = Statistics()
     lrstats = []
 
+    model.to(device)
+
     for epoch in range(num_epochs):
         print('Epoch {}/{}'.format(epoch, num_epochs - 1))
         print('-' * 10)
