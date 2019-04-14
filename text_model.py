@@ -4,10 +4,11 @@ import torch.nn as nn
 import torch.optim as optim
 from torch.optim import lr_scheduler
 import os
+from sentence_encoder import SentenceEmbedding
 
 def create_model_1(nb_inputs, nb_outputs):
 	model = nn.Sequential(
-		nn.Linear(4096, 300),
+		nn.Linear(nb_inputs, 300),
 		nn.Linear(300, 300),
 		nn.Linear(300, nb_outputs),
 		nn.Softmax(0)
@@ -17,7 +18,7 @@ def create_model_1(nb_inputs, nb_outputs):
 
 def create_model_2(nb_inputs, nb_outputs):
 	model = nn.Sequential(
-		nn.Linear(4096, 1000),
+		nn.Linear(nb_inputs, 1000),
 		nn.Linear(1000, 1000),
 		nn.Linear(1000, nb_outputs),
 		nn.Softmax(0)
@@ -27,7 +28,7 @@ def create_model_2(nb_inputs, nb_outputs):
 
 def create_model_3(nb_inputs, nb_outputs):
 	model = nn.Sequential(
-		nn.Linear(4096, 1000),
+		nn.Linear(nb_inputs, 1000),
 		nn.Linear(1000, 1000),
 		nn.Dropout(0.5),
 		nn.Linear(1000, nb_outputs),
@@ -38,7 +39,7 @@ def create_model_3(nb_inputs, nb_outputs):
 
 def create_model_4(nb_inputs, nb_outputs):
 	model = nn.Sequential(
-		nn.Linear(4096, 200),
+		nn.Linear(nb_inputs, 200),
 		nn.Linear(200, 200),
 		nn.Linear(200, 200),
 		nn.Linear(200, 200),
@@ -54,7 +55,7 @@ def create_model_4(nb_inputs, nb_outputs):
 
 def create_model_5(nb_inputs, nb_outputs):
 	model = nn.Sequential(
-		nn.Linear(4096, 200),
+		nn.Linear(nb_inputs, 200),
 		nn.Linear(200, 200),
 		nn.Linear(200, 200),
 		nn.Linear(200, 200),
@@ -64,6 +65,60 @@ def create_model_5(nb_inputs, nb_outputs):
 		nn.Linear(200, 200),
 		nn.Dropout(0.5),
 		nn.Linear(200, nb_outputs),
+		nn.Softmax(0)
+		)
+
+	return model
+
+def create_model_6(nb_inputs, nb_outputs):
+	model = nn.Sequential(
+		nn.Linear(nb_inputs, 1000),
+		nn.Linear(1000, 1000),
+		nn.Linear(1000, 1000),
+		nn.Linear(1000, 1000),
+		nn.Linear(1000, nb_outputs),
+		nn.Softmax(0)
+		)
+
+	return model
+
+def create_model_7(nb_inputs, nb_outputs):
+	model = nn.Sequential(
+		nn.Linear(nb_inputs, 1000),
+		nn.Linear(1000, 1000),
+		nn.Linear(1000, 1000),
+		nn.Linear(1000, 1000),
+		nn.Dropout(0.5),
+		nn.Linear(1000, nb_outputs),
+		nn.Softmax(0)
+		)
+
+	return model
+
+def create_model_8(nb_inputs, nb_outputs):
+	model = nn.Sequential(
+		nn.Linear(nb_inputs, 3000),
+		nn.Linear(3000, 3000),
+		nn.Linear(3000, nb_outputs),
+		nn.Softmax(0)
+		)
+
+	return model
+
+def create_model_9(nb_inputs, nb_outputs):
+	model = nn.Sequential(
+		nn.Linear(nb_inputs, 3000),
+		nn.Linear(3000, 3000),
+		nn.Dropout(0.5),
+		nn.Linear(3000, nb_outputs),
+		nn.Softmax(0)
+		)
+
+	return model
+
+def create_model_10(nb_inputs, nb_outputs):
+	model = nn.Sequential(
+		nn.Linear(nb_inputs, nb_outputs),
 		nn.Softmax(0)
 		)
 
@@ -98,38 +153,43 @@ def test_text_model(model, data_loaders, model_num = ""):
 
 def compare_models(nb_inputs, nb_outputs, data_loaders_file):
 	try:
-		os.mkdir("plots")
+		os.mkdir("plots_text_model")
 	except:
 		pass
 
-	PLOT_DIR = "plots/"
+	PLOT_DIR = "plots_text_model/"
 
 	data_loaders = load_data_loaders(data_loaders_file)
 
-	models = [create_model_1(nb_inputs, nb_outputs),
-			  create_model_2(nb_inputs, nb_outputs),
-			  create_model_3(nb_inputs, nb_outputs),
-			  create_model_4(nb_inputs, nb_outputs),
-			  create_model_5(nb_inputs, nb_outputs)
+	models = [create_model_2(nb_inputs, nb_outputs),
+			  create_model_8(nb_inputs, nb_outputs),
+			  create_model_9(nb_inputs, nb_outputs),
+			  create_model_10(nb_inputs, nb_outputs)
 			 ]
 
-	model_nums = ["1", "2", "3", "4", "5"]
+	model_nums = ["2", "8", "9", "10"]
 	title = "Compare models"
+	file_name = "compare_models"
+
 	for model, model_num in zip(models, model_nums):
-		stats = test_text_model(model, data_loaders)
+		print("model {}".format(model_num))
+		stats = test_text_model(model, data_loaders, model_num)
 		plt.plot(stats.epochs['val'],  stats.accuracies['val'], label="model {}".format(model_num))
 		title += " {}".format(model_num)
+		file_name += "_{}".format(model_num)
 
 	plt.xlabel('epoch')
 	plt.ylabel('Accuracy')
+	plt.title(title)
 	plt.grid(True)
 	plt.legend()
-	plt.savefig(PLOT_DIR + title + ".pdf")
+	plt.savefig(PLOT_DIR + file_name + ".pdf")
 
 if __name__ == "__main__":
 	NB_INPUTS = 4096
 	NB_OUTPUTS = 30
-	DATA_LOADERS_FILE = "text_data_loaders.pickle"
+
+	DATA_LOADERS_FILE = "dataloaders/text_data_loaders.pickle"
 	
 	compare_models(NB_INPUTS, NB_OUTPUTS, DATA_LOADERS_FILE)
 

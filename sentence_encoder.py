@@ -1,5 +1,5 @@
 import nltk
-from models import InferSent
+from InferSent.models import InferSent
 from torch.utils.data import Dataset, DataLoader
 import torch
 import pandas as pd
@@ -8,7 +8,7 @@ import pickle
 class TextBookDataset(Dataset):
 	"""Book dataset."""
 
-	def __init__(self, csv_file, datasetTransform = None, transform=None):
+	def __init__(self, csv_file, datasetTransform, transform=None):
 		"""
 		Args:
 			csv_file (string): Path to the csv file with annotations.
@@ -47,7 +47,7 @@ class SentenceEmbedding():
 		csvFiles: A list of csv files containing the datasets used.
 		"""
 		V = 2
-		MODEL_PATH = 'encoder/infersent%s.pickle' % V
+		MODEL_PATH = 'InferSent/encoder/infersent%s.pickle' % V
 		params_model = {'bsize': 64, 'word_emb_dim': 300, 'enc_lstm_dim': 2048,
 				'pool_type': 'max', 'dpout_model': 0.0, 'version': V}
 
@@ -55,7 +55,7 @@ class SentenceEmbedding():
 		self.infersent.cuda()
 		self.infersent.load_state_dict(torch.load(MODEL_PATH))
 
-		W2V_PATH = 'dataset/fastText/crawl-300d-2M-subword.vec'
+		W2V_PATH = 'InferSent/dataset/fastText/crawl-300d-2M-subword.vec'
 		self.infersent.set_w2v_path(W2V_PATH)
 
 		sentences = []
@@ -106,5 +106,5 @@ if __name__ == "__main__":
 	train_csv_path = "dataset/train_set_cleaned.csv"
 	val_csv_path = "dataset/validation_set_cleaned.csv"
 	test_csv_path = "dataset/book30-listing-test_cleaned.csv"
-	pickle_file_name = "text_data_loaders.pickle"
+	pickle_file_name = "dataloaders/encoded_text_data_loaders.pickle"
 	save_text_data_loaders(train_csv_path, val_csv_path, test_csv_path, pickle_file_name, 4, 0)
