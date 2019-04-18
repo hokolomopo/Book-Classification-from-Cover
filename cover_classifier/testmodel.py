@@ -77,10 +77,10 @@ def change_model(model, trained_layers, n_outputs):
     # model.fc = nn.Linear(num_ftrs, n_outputs)
 
     model.fc = nn.Sequential(
-            # nn.Linear(num_ftrs, 256), 
-            # nn.ReLU(), 
+            nn.Linear(num_ftrs, 256), 
+            nn.ReLU(), 
             nn.Dropout(0.4),
-            nn.Linear(num_ftrs, n_outputs),                   
+            nn.Linear(256, n_outputs),                   
             nn.LogSoftmax(dim=1))
 
 
@@ -131,11 +131,7 @@ def visualize_model(model, num_images=6):
                     return
         model.train(mode=was_training)
 
-<<<<<<< HEAD:cover_classifier/testmodel.py
 def train_model(model, dataloaders, dataset_sizes, batch_size, criterion, optimizer, scheduler, num_epochs=25, device="cpu", scheduler_step="cycle"):
-=======
-def train_model(model, dataloaders, dataset_sizes, batch_size, criterion, optimizer, scheduler = None, num_epochs=25, device="cpu"):
->>>>>>> 680fc0f9a8aff18f573b3f5f9c191fba08864354:testmodel.py
     since = time.time()
 
     best_model_wts = copy.deepcopy(model.state_dict())
@@ -150,11 +146,7 @@ def train_model(model, dataloaders, dataset_sizes, batch_size, criterion, optimi
         # Each epoch has a training and validation phase
         for phase in ['train', 'val']:
             if phase == 'train':
-<<<<<<< HEAD:cover_classifier/testmodel.py
-                if(scheduler_step == "cycle"):
-=======
-                if scheduler:
->>>>>>> 680fc0f9a8aff18f573b3f5f9c191fba08864354:testmodel.py
+                if(scheduler and scheduler_step == "cycle"):
                     scheduler.step()
                 model.train()  # Set model to training mode
             else:
@@ -190,7 +182,7 @@ def train_model(model, dataloaders, dataset_sizes, batch_size, criterion, optimi
                     if phase == 'train':
                         loss.backward()
                         optimizer.step()
-                        if(scheduler_step == "batch"):
+                        if(scheduler and scheduler_step == "batch"):
                             scheduler.batch_step()
 
                 # statistics
