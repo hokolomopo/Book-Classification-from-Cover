@@ -75,8 +75,12 @@ class SentenceEmbedding():
 		print(type(transformedTitles[0]))
 		return transformedTitles
 
-def create_text_data_loaders(train_csv_file, val_csv_file, test_csv_file, batch_size, num_workers = 1):
-	datasetTransform = SentenceEmbedding([train_csv_file, val_csv_file, test_csv_file])
+def create_text_data_loaders(batch_size, num_workers = 1):
+	train_csv_file = "dataset/train_set_cleaned.csv"
+	val_csv_file = "dataset/validation_set_cleaned.csv"
+	test_csv_file = "dataset/book30-listing-test_cleaned.csv"
+
+	datasetTransform = SentenceEmbedding([train_csv_file, val_csv_file, test_csv_file])²
 
 	print("creating datasets")
 	train_set = TextBookDataset(train_csv_file, datasetTransform = datasetTransform)
@@ -95,18 +99,48 @@ def create_text_data_loaders(train_csv_file, val_csv_file, test_csv_file, batch_
 
 	return data_loaders
 
-def save_text_data_loaders(train_csv_file, val_csv_path, test_csv_file, pickle_file_name, batch_size, num_workers = 0):
-	data_loaders = create_text_data_loaders(train_csv_file, val_csv_path, test_csv_file, batch_size, num_workers)
+def save_text_data_loaders(pickle_file_name, batch_size, num_workers = 0):
+	data_loaders = create_text_data_loaders(batch_size, num_workers)
+	print("pickling dataloaders")
+	with open(pickle_file_name, "wb") as fp:
+		pickle.dump(data_loaders, fp)
+
+def create_final_text_data_loaders(batch_size, num_workers = 1):
+	train_csv_file = "dataset/book30-listing-train_cleaned.csv"
+	val_csv_file = "dataset/book30-listing-test_cleaned.csv"
+	test_csv_file = "dataset/book30-listing-test_cleaned.csv"
+
+	datasetTransform = SentenceEmbedding([train_csv_file, val_csv_file])
+
+	print("creating datasets")
+	train_set = TextBookDataset(train_csv_file, datasetTransform = datasetTransform)
+	val_set = TextBookDataset(val_csv_file, datasetTransform = datasetTransform)
+	test_set = TextBookDataset(test_csv_file, datasetTransform = datasetTransform)
+
+	print("creating dataloaders")
+	data_loaders = {
+		"train": DataLoader(train_set, batch_size = batch_size, shuffle = True,
+							num_workers = num_workers),
+		"val": DataLoader(val_set, batch_size = batch_size, shuffle = True, 
+						  num_workers = num_workers),
+		"test": DataLoader(test_set, batch_size = batch_size, shuffle = True, 
+						   num_workers = num_workers)
+	}
+
+	return data_loaders
+
+def save_final_text_data_loaders(pickle_file_name, batch_size, num_workers = 0):
+	data_loaders = create_final_text_data_loaders(batch_size, num_workers)
 	print("pickling dataloaders")
 	with open(pickle_file_name, "wb") as fp:
 		pickle.dump(data_loaders, fp)
 
 if __name__ == "__main__":
-	BTACH_SIZES = [4, 8, 16, 32, 64] 
+	BTACH_SIZES = [4, 8, 16, 32, 64]
 	nltk.download('punkt')
-	train_csv_path = "dataset/train_set_cleaned.csv"
-	val_csv_path = "dataset/validation_set_cleaned.csv"
-	test_csv_path = "dataset/book30-listing-test_cleaned.csv"
+	
 	for batch_size in BTACH_SIZES:
 		pickle_file_name = "dataloaders/encoded_text_data_loaders_{}.pickle".format(batch_size)
-		save_text_data_loaders(train_csv_path, val_csv_path, test_csv_path, pickle_file_name, batch_size, 0)
+		save_text_data_loaders(pickle_file_name, batch_size, 0)
+		pickle_file_name = "dataloaders/final_encoded_text_data_loaders_{}.pickle".format(batch_size)
+		save_finals_text_data_loaders(pickle_file_name, batch_size, 0)

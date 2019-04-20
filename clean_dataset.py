@@ -1,12 +1,12 @@
 import pandas as pd
 import nltk
-from models import InferSent
+from InferSent.models import InferSent
 import torch
 
 def clean(csv_file_names):
 	nltk.download('punkt')
 	V = 2
-	MODEL_PATH = 'encoder/infersent%s.pickle' % V
+	MODEL_PATH = 'InferSent/encoder/infersent%s.pickle' % V
 	params_model = {'bsize': 64, 'word_emb_dim': 300, 'enc_lstm_dim': 2048,
 			'pool_type': 'max', 'dpout_model': 0.0, 'version': V}
 
@@ -14,7 +14,7 @@ def clean(csv_file_names):
 	infersent.cuda()
 	infersent.load_state_dict(torch.load(MODEL_PATH))
 
-	W2V_PATH = 'dataset/fastText/crawl-300d-2M-subword.vec'
+	W2V_PATH = 'InferSent/dataset/fastText/crawl-300d-2M-subword.vec'
 	infersent.set_w2v_path(W2V_PATH)
 	
 	cols = ["index", "filename", "url", "title", "author", "class", "class_name"]		
@@ -31,6 +31,7 @@ def clean(csv_file_names):
 		dataset.to_csv(new_file_name, index = False, encoding = "ISO-8859-1", header = False)
 
 if __name__ == "__main__":
-	clean(["dataset/validation_set.csv",
+	clean(["dataset/book30-listing-train.csv",
+		   "dataset/validation_set.csv",
 		   "dataset/book30-listing-test.csv",
 		   "dataset/train_set.csv"])
