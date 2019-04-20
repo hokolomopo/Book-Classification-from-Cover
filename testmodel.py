@@ -75,26 +75,6 @@ def change_model(model, trained_layers, n_outputs):
     num_ftrs = model.fc.in_features
     # model.fc = nn.Linear(num_ftrs, n_outputs)
 
-def change_model(model, trained_layers, n_outputs):
-    for param in model.parameters():
-        param.requires_grad = False
-
-    # Count the number of layers
-    dpt = 0
-    for child in model.children():
-        dpt += 1
-
-    # Unfreeze last trained_layers layers
-    ct = 0
-    for child in model.children():
-        ct += 1
-        if ct > dpt - (trained_layers - 1):
-            for param in child.parameters():
-                param.requires_grad = True
-
-    num_ftrs = model.fc.in_features
-    # model.fc = nn.Linear(num_ftrs, n_outputs)
-
     model.fc = nn.Sequential(
             nn.Linear(num_ftrs, 256), 
             nn.ReLU(), 
@@ -104,11 +84,6 @@ def change_model(model, trained_layers, n_outputs):
 
 
     return model
-
-
-
-    return model
-
 
 def imshow(inp, title=None):
     """Imshow for Tensor."""
@@ -161,8 +136,6 @@ def train_model(model, dataloaders, dataset_sizes, batch_size, criterion, optimi
     best_acc = 0.0
 
     stats = Statistics()
-
-    model.to(device)
 
     for epoch in range(num_epochs):
         print('Epoch {}/{}'.format(epoch, num_epochs - 1))

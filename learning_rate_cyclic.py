@@ -1,6 +1,6 @@
 from testmodel import *
 
-def train_model(model, dataloaders, dataset_sizes, batch_size, criterion, optimizer, scheduler, num_epochs=25, device="cpu", scheduler_step="cycle"):
+def train_model(model, dataloaders, dataset_sizes, batch_size, criterion, optimizer, scheduler = None, num_epochs=25, device="cpu", scheduler_step="cycle"):
     since = time.time()
 
     best_model_wts = copy.deepcopy(model.state_dict())
@@ -18,7 +18,7 @@ def train_model(model, dataloaders, dataset_sizes, batch_size, criterion, optimi
         # Each epoch has a training and validation phase
         for phase in ['train', 'val']:
             if phase == 'train':
-                if(scheduler_step == "cycle"):
+                if(scheduler and scheduler_step == "cycle"):
                     scheduler.step()
                 model.train()  # Set model to training mode
             else:
@@ -36,7 +36,11 @@ def train_model(model, dataloaders, dataset_sizes, batch_size, criterion, optimi
                 progress += batch_size / dataset_sizes[phase] * 100
                 if(progress > 10 + lastPrint) or lastPrint == 0:
                     lastPrint = progress
-                    print('Epoch {} : lr {}, {:.2f}% time : {:.2f}'.format(epoch, scheduler.get_lr(), progress, time.time() - start))
+                    if scheduler:
+                        print('Epoch {} : lr {}, {:.2f}% time : {:.2f}'.format(epoch, scheduler.get_lr(), progress, time.time() - start))
+                    else:
+                        print('Epoch {}, {:.2f}% time : {:.2f}'.format(epoch, progress, time.time() - start))
+
                 inputs = inputs.to(device)
                 labels = labels.to(device)
 
@@ -54,7 +58,7 @@ def train_model(model, dataloaders, dataset_sizes, batch_size, criterion, optimi
                     if phase == 'train':
                         loss.backward()
                         optimizer.step()
-                        if(scheduler_step == "batch"):
+                        if(scheduler and scheduler_step == "batch"):
                             scheduler.batch_step()
 
                 # statistics
@@ -72,7 +76,7 @@ def train_model(model, dataloaders, dataset_sizes, batch_size, criterion, optimi
             stats.epochs[phase].append(epoch)
             stats.times[phase].append(end - start)
 
-            if phase == 'val':
+            if phase == 'val' and scheduler:
                 lrstats.append((scheduler.get_lr(), epoch_acc))
 
             print('{} Loss: {:.4f} Acc: {:.4f}'.format(
