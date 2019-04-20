@@ -9,7 +9,7 @@ if __name__ == "__main__":
     trained_layers = 10 
     n_outputs = 30
 
-    min_lr = 1e-4
+    min_lr= 1e-4
     max_lr = 6e-3
 
 
@@ -58,11 +58,15 @@ if __name__ == "__main__":
     folder = "final/"
 
     # Observe that all parameters are being optimized
-    optimizer_ft = optim.SGD(model_ft.parameters(), lr=min_lr, momentum=0.9)
+    # optimizer_ft = optim.SGD(model_ft.parameters(), lr=min_lr, momentum=0.9)
 
-    exp_lr_scheduler = liboptim.cyclic_sceduler.CyclicLR(optimizer_ft, mode='triangular', base_lr=min_lr, max_lr=max_lr, step_size=2 * dataset_sizes['train'] / batch_size)
+    # exp_lr_scheduler = liboptim.cyclic_sceduler.CyclicLR(optimizer_ft, mode='triangular', base_lr=min_lr, max_lr=max_lr, step_size=2 * dataset_sizes['train'] / batch_size)
+    # model_ft, stats = train_model(model_ft, dataloaders, dataset_sizes, batch_size, criterion, optimizer_ft, exp_lr_scheduler,
+    #                     num_epochs=n_epoch, device=device, scheduler_step="batch")
 
-    model_ft, stats = train_model(model_ft, dataloaders, dataset_sizes, batch_size, criterion, optimizer_ft, exp_lr_scheduler,
+    optimizer_ft = optim.Adam(model_ft.parameters(), lr = 1e-3)
+
+    model_ft, stats = train_model(model_ft, dataloaders, dataset_sizes, batch_size, criterion, optimizer_ft, None,
                         num_epochs=n_epoch, device=device, scheduler_step="batch")
 
 

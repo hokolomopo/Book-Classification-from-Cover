@@ -1,5 +1,11 @@
 from testmodel import *
 
+"""
+File used to determine teh best learning rates when using a cylci learning rate 
+from the methodology proposed by the autor of the cyclic learning rate
+"""
+
+
 def train_model(model, dataloaders, dataset_sizes, batch_size, criterion, optimizer, scheduler = None, num_epochs=25, device="cpu", scheduler_step="cycle"):
     since = time.time()
 
@@ -160,12 +166,12 @@ if __name__ == "__main__":
     criterion = nn.CrossEntropyLoss()
 
     stats_list = []
-    folder = "lr_cyclic/"
+    folder = "cover_lr_cyclic/"
 
     # Observe that all parameters are being optimized
     optimizer_ft = optim.SGD(model_ft.parameters(), lr=min_lr, momentum=0.9)
 
-    exp_lr_scheduler = liboptim.cyclic_sceduler.CyclicLR(optimizer_ft, base_lr=min_lr, max_lr=max_lr, step_size= n_epoch * dataset_sizes['train'] / batch_size)
+    exp_lr_scheduler = cyclic_sceduler.CyclicLR(optimizer_ft, base_lr=min_lr, max_lr=max_lr, step_size= n_epoch * dataset_sizes['train'] / batch_size)
 
     model_ft, stats , lrstats = train_model(model_ft, dataloaders, dataset_sizes, batch_size, criterion, optimizer_ft, exp_lr_scheduler,
                         num_epochs=n_epoch, device=device, scheduler_step="batch")
@@ -198,29 +204,3 @@ if __name__ == "__main__":
     plt.ylabel('Accuracy')
     plt.grid(True)
     plt.savefig(folder +"n_epoch_{}__Resnet{}__batch_size_{}__trained_layers_{}__n_outputs_{}.pdf".format(n_epoch, resnet, batch_size, trained_layers, n_outputs))
-
-
-
-    # for x in ['train', 'val']:
-    #     plt.figure(frameon  = False)
-    #     for i in range(len(lrs)):
-    #         plt.plot(stats_list[i].epochs[x],  stats_list[i].accuracies[x], label="lr {}".format(lrs[i]))
-    #     plt.xlabel('epoch')
-    #     plt.ylabel('Accuracy')
-    #     plt.grid(True)
-    #     plt.legend()
-    #     plt.savefig(folder +"n_epoch_{}__Resnet{}__batch_size_{}__trained_layers_{}__n_outputs_{}__Accuracy_{}.pdf".format(n_epoch, resnet, batch_size, trained_layers, n_outputs, x))
-
-    #     plt.figure(frameon  = False)
-    #     for i in range(len(lrs)):
-    #         plt.plot(stats_list[i].epochs[x],  stats_list[i].losses[x], label="lr {}".format(lrs[i]))
-    #     plt.xlabel('epoch')
-    #     plt.ylabel('losses')
-    #     plt.grid(True)
-    #     plt.legend()
-    #     plt.savefig(folder +"n_epoch_{}__Resnet{}__batch_size_{}__trained_layers_{}__n_outputs_{}__Loss_{}.pdf".format(n_epoch, resnet, batch_size, trained_layers, n_outputs,x))
-
-    # file = open(folder + "lr_results.txt", "a+")
-    # file.write('\n\n')
-    # file.close()
-

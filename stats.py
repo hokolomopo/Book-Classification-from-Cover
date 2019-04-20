@@ -21,3 +21,11 @@ class Statistics():
     	bestAccRepr = "Best acc = {}\n".format(self.best_acc)
 
     	return accuraciesRepr + lossesRepr + epochsRepr + timesRepr + timeElapsedRepr + bestAccRepr
+
+class CNNParameters():
+    def __init__(self, resnet, batch_size, trained_layers, n_outputs, lr=0):
+        self.resnet = resnet
+        self.batch_size = batch_size
+        self.trained_layers = trained_layers
+        self.n_outputs = n_outputs
+        self.lr = lr

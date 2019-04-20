@@ -164,7 +164,7 @@ def train_model(model, dataloaders, dataset_sizes, batch_size, criterion, optimi
                 progress += batch_size / dataset_sizes[phase] * 100
                 if(progress > 10 + lastPrint) or lastPrint == 0:
                     lastPrint = progress
-                    print('Epoch {} : lr {:.5f}, {:.2f}% time : {:.2f}'.format(epoch, scheduler.get_lr()[0], progress, time.time() - start))
+                    print('Epoch {} : {:.2f}% time : {:.2f}'.format(epoch, progress, time.time() - start))
                 inputs = inputs.to(device)
                 labels = labels.to(device)
 

@@ -1,31 +1,3 @@
-"""
-Transfer Learning Tutorial
-==========================
-**Author**: `Sasank Chilamkurthy <https://chsasank.github.io>`_
-In this tutorial, you will learn how to train your network using
-transfer learning. You can read more about the transfer learning at `cs231n
-notes <https://cs231n.github.io/transfer-learning/>`__
-Quoting these notes,
-    In practice, very few people train an entire Convolutional Network
-    from scratch (with random initialization), because it is relatively
-    rare to have a dataset of sufficient size. Instead, it is common to
-    pretrain a ConvNet on a very large dataset (e.g. ImageNet, which
-    contains 1.2 million images with 1000 categories), and then use the
-    ConvNet either as an initialization or a fixed feature extractor for
-    the task of interest.
-These two major transfer learning scenarios look as follows:
--  **Finetuning the convnet**: Instead of random initializaion, we
-   initialize the network with a pretrained network, like the one that is
-   trained on imagenet 1000 dataset. Rest of the training looks as
-   usual.
--  **ConvNet as fixed feature extractor**: Here, we will freeze the weights
-   for all of the network except that of the final fully connected
-   layer. This last fully connected layer is replaced with a new one
-   with random weights and only this layer is trained.
-"""
-# License: BSD
-# Author: Sasank Chilamkurthy
-
 from __future__ import print_function, division
 
 import torch
@@ -42,6 +14,7 @@ import copy
 
 from stats import Statistics
 from bookDataset import BookDataset
+import cyclic_sceduler
 
 def load_resnet(n):
     if n == 18:
@@ -56,6 +29,9 @@ def load_resnet(n):
         return models.resnet152(pretrained=True)
 
 def change_model(model, trained_layers, n_outputs):
+    """
+    Freez the layers of the models expect the ones on top and add some layers on top of the mode
+    """
     for param in model.parameters():
         param.requires_grad = False
 
@@ -73,7 +49,6 @@ def change_model(model, trained_layers, n_outputs):
                 param.requires_grad = True
 
     num_ftrs = model.fc.in_features
-    # model.fc = nn.Linear(num_ftrs, n_outputs)
 
     model.fc = nn.Sequential(
             nn.Linear(num_ftrs, 256), 
@@ -85,51 +60,10 @@ def change_model(model, trained_layers, n_outputs):
 
     return model
 
-def imshow(inp, title=None):
-    """Imshow for Tensor."""
-    inp = inp.numpy().transpose((1, 2, 0))
-    mean = np.array([0.485, 0.456, 0.406])
-    std = np.array([0.229, 0.224, 0.225])
-    inp = std * inp + mean
-    inp = np.clip(inp, 0, 1)
-    plt.imshow(inp)
-    if title is not None:
-        plt.title(title)
-    plt.pause(1)  # pause a bit so that plots are updated
-
-######################################################################
-# Visualizing the model predictions
-# ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-#
-# Generic function to display predictions for a few images
-#
-def visualize_model(model, num_images=6):
-    was_training = model.training
-    model.eval()
-    images_so_far = 0
-    fig = plt.figure()
-
-    with torch.no_grad():
-        for i, (inputs, labels) in enumerate(dataloaders['val']):
-            inputs = inputs.to(device)
-            labels = labels.to(device)
-
-            outputs = model(inputs)
-            _, preds = torch.max(outputs, 1)
-
-            for j in range(inputs.size()[0]):
-                images_so_far += 1
-                ax = plt.subplot(num_images//2, 2, images_so_far)
-                ax.axis('off')
-                ax.set_title('predicted: {}'.format(class_names[preds[j]]))
-                imshow(inputs.cpu().data[j])
-
-                if images_so_far == num_images:
-                    model.train(mode=was_training)
-                    return
-        model.train(mode=was_training)
-
-def train_model(model, dataloaders, dataset_sizes, batch_size, criterion, optimizer, scheduler = None, num_epochs=25, device="cpu"):
+def train_model(model, dataloaders, dataset_sizes, batch_size, criterion, optimizer, scheduler = None, num_epochs=25, device="cpu", scheduler_step="cycle"):
+    """
+    Train a model and return the trained model and statistics from the training
+    """
     since = time.time()
 
     best_model_wts = copy.deepcopy(model.state_dict())
@@ -144,7 +78,7 @@ def train_model(model, dataloaders, dataset_sizes, batch_size, criterion, optimi
         # Each epoch has a training and validation phase
         for phase in ['train', 'val']:
             if phase == 'train':
-                if scheduler:
+                if scheduler and scheduler_step == "cycle":
                     scheduler.step()
                 model.train()  # Set model to training mode
             else:
@@ -180,6 +114,8 @@ def train_model(model, dataloaders, dataset_sizes, batch_size, criterion, optimi
                     if phase == 'train':
                         loss.backward()
                         optimizer.step()
+                        if(scheduler and scheduler_step == "batch"):
+                            scheduler.batch_step()
 
                 # statistics
                 running_loss += loss.item() * inputs.size(0)
@@ -224,7 +160,6 @@ def train_model(model, dataloaders, dataset_sizes, batch_size, criterion, optimi
     return (model, stats)
 
 if __name__ == "__main__":
-    # plt.ion()   # interactive mode
     n_epoch = 30
     batch_size = 64
     n_workers = 4
@@ -239,8 +174,6 @@ if __name__ == "__main__":
     max_lr = 6e-3
 
     lr = min_lr
-    # min_lr = 5e-3
-
 
     # Data augmentation and normalization for training
     # Just normalization for validation
@@ -274,22 +207,6 @@ if __name__ == "__main__":
     class_names = image_datasets['train'].classes
 
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-    
-    ######################################################################
-    # Visualize a few images
-    # ^^^^^^^^^^^^^^^^^^^^^^
-    # Let's visualize a few training images so as to understand the data
-    # augmentations.
-
-
-    # inputs, classes = next(iter(dataloaders['train']))
-
-
-    # # Make a grid from batch
-    # out = torchvision.utils.make_grid(inputs)
-
-    # imshow(out, title=[class_names[x] for x in classes])
-
 
     ######################################################################
     # Training the model
@@ -300,26 +217,20 @@ if __name__ == "__main__":
 
     criterion = nn.CrossEntropyLoss()
 
-    # Observe that all parameters are being optimized
     optimizer_ft = optim.SGD(model_ft.parameters(), lr=min_lr, momentum=0.9)
 
-    # Decay LR by a factor of 0.1 every 7 epochs
     # exp_lr_scheduler = lr_scheduler.StepLR(optimizer_ft, step_size=7, gamma=0.1)
-    exp_lr_scheduler = liboptim.cyclic_sceduler.CyclicLR(optimizer_ft, mode='triangular', base_lr=min_lr, max_lr=max_lr, step_size=2 * dataset_sizes['train'] / batch_size)
-
-    ######################################################################
-    # Train and evaluate
-    # ^^^^^^^^^^^^^^^^^^
-    #
-    # It should take around 15-25 min on CPU. On GPU though, it takes less than a
-    # minute.
-    #
+    exp_lr_scheduler = cyclic_sceduler.CyclicLR(optimizer_ft, mode='triangular', base_lr=min_lr, max_lr=max_lr, step_size=2 * dataset_sizes['train'] / batch_size)
 
     model_ft, stats = train_model(model_ft, dataloaders, dataset_sizes, batch_size, criterion, optimizer_ft, exp_lr_scheduler,
                         num_epochs=n_epoch, device=device, scheduler_step="batch")
 
     folder = ""
 
+
+    ######################################################################
+    # Save results
+    # ------------------
     file = open(folder + "{}.txt".format(filename), "a+")
     file.write("{}_Resnet{}, lr : {}, batch size : {}, trained_layers : {}, n_outputs : {}\n".format(finaLayer, resnet, lr, batch_size, trained_layers, n_outputs))
 
@@ -333,6 +244,8 @@ if __name__ == "__main__":
     file.write('Best val Acc: {:4f} \n\n'.format(stats.best_acc))
     file.close()
 
+
+    #Plot results
     plt.figure(frameon  = False)
     for x in ['train', 'val']:
         plt.plot(stats.epochs[x],  stats.accuracies[x], label=x)
@@ -350,8 +263,3 @@ if __name__ == "__main__":
     plt.grid(True)
     plt.legend()
     plt.savefig(folder +"graph/n_epoch_{}__Resnet{}__batch_size_{}__trained_layers_{}__n_outputs_{}__Loss.pdf".format(n_epoch, resnet, batch_size, trained_layers, n_outputs))
-
-    # ######################################################################
-    # #
-
-    # visualize_model(model_ft)
