@@ -10,7 +10,7 @@ def getPredInOrder(preds):
 
     return res
 
-def getKsAccs(preds, labels):
+def getKsAccs(preds, labels, topK):
     labels = labels.cpu()
     labels = np.asarray(labels)
     labels = labels.tolist()
@@ -36,7 +36,7 @@ def getKsAccs(preds, labels):
         accs[i] += cumsum
         cumsum += acc
 
-    return accs[5]
+    return accs[topK]
 
 
 if __name__ == "__main__":
@@ -106,7 +106,7 @@ if __name__ == "__main__":
             getPredInOrder(outputs[0])
             _, preds = torch.max(outputs, 1)
             loss = criterion(outputs, labels)
-            myAcc += getKsAccs(outputs, labels)
+            myAcc += getKsAccs(outputs, labels, 5)
 
 
         # statistics
