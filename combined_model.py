@@ -27,8 +27,6 @@ class CombinedModel(nn.Module):
 
 		self.join_layer = nn.Sequential(nn.Linear(1256, 1256),
 										nn.LeakyReLU(),
-										nn.Linear(1256, 1256),
-										nn.LeakyReLU(),
 										nn.Linear(1256, n_outputs),
 										nn.Softmax(0),
 										)

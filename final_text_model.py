@@ -4,7 +4,7 @@ from text_model import load_data_loaders
 import torch.nn as nn
 import torch.optim as optim
 from sentence_encoder import *
-import liboptim.cyclic_sceduler
+import cyclic_sceduler
 import matplotlib.pyplot as plt
 
 def build_final_text_model_cyclic_lr():
@@ -40,7 +40,7 @@ def build_final_text_model_cyclic_lr():
 
 	optimizer = optim.SGD(model.parameters(), lr = MIN_LR, momentum = 0.9)
 
-	scheduler = liboptim.cyclic_sceduler.CyclicLR(optimizer, base_lr = MIN_LR, max_lr = MAX_LR, 
+	scheduler = cyclic_sceduler.CyclicLR(optimizer, base_lr = MIN_LR, max_lr = MAX_LR, 
 												  step_size = CYCLE_LENGTH * dataset_sizes['train'] / BATCH_SIZE)
 
 	model, stats, lrstats = train_model(model, dataloaders, dataset_sizes, BATCH_SIZE, criterion, optimizer, scheduler, 
@@ -100,7 +100,20 @@ def build_final_text_model_adam():
 
 	return model, stats, lrstats
 
+def compare_adam_cyclic():
+	PLOT_DIR = "plots_text_model/"
+
+	cyclic_model, cyclic_stats, cyclic_lrstats = build_final_text_model_cyclic_lr()
+	adam_model, adam_stats, adam_lrstats = build_final_text_model_adam()
+
+	plt.plot(cyclic_stats.epochs['val'], cyclic_stats.accuracies['val'], label = "cyclic_lr")
+	plt.plot(adam_stats.epochs['val'], adam_stats.accuracies['val'], label = "adam")
+	plt.xlabel('Epochs')
+	plt.ylabel('Accuracy')
+	plt.grid(True)
+	plt.savefig(PLOT_DIR + "compare_text_cyclic_adam.pdf")
 
 if __name__ == "__main__":
 	#build_final_text_model_cyclic_lr()
-	build_final_text_model_adam()
+	#build_final_text_model_adam()
+	compare_adam_cyclic()
