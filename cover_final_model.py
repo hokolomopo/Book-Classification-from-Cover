@@ -60,7 +60,7 @@ if __name__ == "__main__":
 
     exp_lr_scheduler = cyclic_sceduler.CyclicLR(optimizer_ft, mode='triangular', base_lr=min_lr, max_lr=max_lr, step_size=2 * dataset_sizes['train'] / batch_size)
 
-    model_ft, stats = train_model(model_ft, dataloaders, dataset_sizes, batch_size, criterion, optimizer_ft, exp_lr_scheduler,
+    model_ft, stats = train_model(model_ft, dataloaders, dataset_sizes, batch_size, criterion, optimizer_ft, None,
                         num_epochs=n_epoch, device=device, scheduler_step="batch")
 
 
