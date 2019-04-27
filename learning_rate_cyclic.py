@@ -47,7 +47,12 @@ def train_model(model, dataloaders, dataset_sizes, batch_size, criterion, optimi
                     else:
                         print('Epoch {}, {:.2f}% time : {:.2f}'.format(epoch, progress, time.time() - start))
 
-                inputs = inputs.to(device)
+                if type(inputs) is list or type(inputs) is tuple:
+                    for i, input in enumerate(inputs):
+                        inputs[i] = input.to(device)
+                else:
+                    inputs = inputs.to(device)
+                
                 labels = labels.to(device)
 
                 # zero the parameter gradients
@@ -68,7 +73,11 @@ def train_model(model, dataloaders, dataset_sizes, batch_size, criterion, optimi
                             scheduler.batch_step()
 
                 # statistics
-                running_loss += loss.item() * inputs.size(0)
+                if type(inputs) is list or type(inputs) is tuple:
+                    running_loss += loss.item() * inputs[0].size(0)
+                else:
+                    running_loss += loss.item() * inputs.size(0)
+                    
                 running_corrects += torch.sum(preds == labels.data)
                 
 
