@@ -4,7 +4,7 @@ import torch.nn as nn
 import os
 import torch.optim as optim
 from sentence_encoder import *
-import liboptim.cyclic_sceduler
+import cyclic_sceduler
 import matplotlib.pyplot as plt
 from text_model import create_model_3, load_data_loaders
 
@@ -57,7 +57,7 @@ def test_batch_sizes_cyclic_lr(model, batch_sizes, criterion, optimizer, min_lr,
 			data_loaders_file = "dataloaders/encoded_text_data_loaders_{}.pickle".format(batch_size)
 		data_loaders = load_data_loaders(data_loaders_file)
 		dataset_sizes = {phase: len(data_loader.dataset) for phase, data_loader in data_loaders.items()}
-		scheduler = liboptim.cyclic_sceduler.CyclicLR(optimizer, base_lr = min_lr, max_lr = max_lr, 
+		scheduler = cyclic_sceduler.CyclicLR(optimizer, base_lr = min_lr, max_lr = max_lr, 
 												  	  step_size = cycle_length * dataset_sizes['train'] / batch_size)
 		print("batch_size = {}".format(batch_size))
 		model, stats, lrstats = train_model(model, data_loaders, dataset_sizes, batch_size, criterion, 

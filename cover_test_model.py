@@ -36,7 +36,59 @@ def getKsAccs(preds, labels, topK):
         accs[i] += cumsum
         cumsum += acc
 
-    return accs[topK]
+    return accs[topK - 1]
+
+def print_acc(model, dataloader, dataset_size, topK, batch_size, device):
+    criterion = nn.CrossEntropyLoss()
+
+    running_loss = 0.0
+    running_corrects = 0
+
+    # Iterate over data.
+    progress = 0
+    lastPrint = 0
+    start = time.time()
+
+    myAcc= 0
+
+    for inputs, labels in dataloader:
+        progress += batch_size / dataset_size * 100
+        if(progress > 10 + lastPrint) or lastPrint == 0:
+            lastPrint = progress
+            print('Progress {:.2f}% time : {:.2f}'.format(progress, time.time() - start))
+        
+        if type(inputs) is list or type(inputs) is tuple:
+            for i, input in enumerate(inputs):
+                inputs[i] = input.to(device)
+        else:
+            inputs = inputs.to(device)
+        
+        labels = labels.to(device)
+
+        # forward
+        # track history if only in train
+        with torch.set_grad_enabled(False):
+            outputs = model(inputs)
+            getPredInOrder(outputs[0])
+            _, preds = torch.max(outputs, 1)
+            loss = criterion(outputs, labels)
+            myAcc += getKsAccs(outputs, labels, topK)
+
+        # statistics
+        running_loss += loss.item() * inputs.size(0)
+        running_corrects += torch.sum(preds == labels.data)
+        
+
+    epoch_loss = running_loss / dataset_size
+    epoch_acc = running_corrects.double() / dataset_size
+    epoch_acc2 = float(myAcc) / dataset_size
+
+    print("MyAcc ", epoch_acc2)
+
+    end = time.time()
+
+    print('Loss: {:.4f} Acc: {:.4f}'.format(
+        epoch_loss, epoch_acc))
 
 
 if __name__ == "__main__":
@@ -49,7 +101,6 @@ if __name__ == "__main__":
     modelPath = "cover_final/64 w relu/model64"
 
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-
 
     print("Loading model...")
     model = load_resnet(18)
@@ -79,49 +130,4 @@ if __name__ == "__main__":
     dataset_size = len(image_dataset)
     class_names = image_dataset.classes
 
-    criterion = nn.CrossEntropyLoss()
-
-    running_loss = 0.0
-    running_corrects = 0
-
-    # Iterate over data.
-    progress = 0
-    lastPrint = 0
-    start = time.time()
-
-    myAcc= 0
-
-    for inputs, labels in dataloader:
-        progress += batch_size / dataset_size * 100
-        if(progress > 10 + lastPrint) or lastPrint == 0:
-            lastPrint = progress
-            print('Progress {:.2f}% time : {:.2f}'.format(progress, time.time() - start))
-        inputs = inputs.to(device)
-        labels = labels.to(device)
-
-        # forward
-        # track history if only in train
-        with torch.set_grad_enabled(False):
-            outputs = model(inputs)
-            getPredInOrder(outputs[0])
-            _, preds = torch.max(outputs, 1)
-            loss = criterion(outputs, labels)
-            myAcc += getKsAccs(outputs, labels, 5)
-
-
-        # statistics
-        running_loss += loss.item() * inputs.size(0)
-        running_corrects += torch.sum(preds == labels.data)
-        
-
-    epoch_loss = running_loss / dataset_size
-    epoch_acc = running_corrects.double() / dataset_size
-    epoch_acc2 = float(myAcc) / dataset_size
-
-    print("MyAcc ", epoch_acc2)
-
-    end = time.time()
-
-    print('Loss: {:.4f} Acc: {:.4f}'.format(
-        epoch_loss, epoch_acc))
-
+    print_acc(model, dataloader, dataset_size, 0, batch_size, device)

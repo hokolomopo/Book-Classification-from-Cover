@@ -1,10 +1,11 @@
 from sentence_encoder import *
-from testmodel import *
+from learning_rate_cyclic import train_model
 import torch.nn as nn
 import torch.optim as optim
 from torch.optim import lr_scheduler
 import os
 from sentence_encoder import SentenceEmbedding
+from matplotlib import pyplot as plt
 
 def create_model_1(nb_inputs, nb_outputs):
 	model = nn.Sequential(
@@ -262,13 +263,69 @@ def create_model_14(nb_inputs, nb_outputs):
 	model.apply(init_weights)
 	return model
 
+def create_model_15(nb_inputs, nb_outputs):
+	model = nn.Sequential(
+		nn.Linear(nb_inputs, 1000),
+		nn.ReLU(),
+		nn.Linear(1000, nb_outputs),
+		nn.Softmax(0)
+		)
+
+	return model
+
+def create_model_16(nb_inputs, nb_outputs, dropout = 0.5):
+	model = nn.Sequential(
+		nn.Linear(nb_inputs, 1000),
+		nn.ReLU(),
+		nn.Dropout(dropout),
+		nn.Linear(1000, nb_outputs),
+		nn.Softmax(0)
+		)
+
+	return model
+
+def create_model_17(nb_inputs, nb_outputs, dropout = 0.5):
+	model = nn.Sequential(
+		nn.Dropout(dropout),
+		nn.Linear(nb_inputs, nb_outputs),
+		nn.Softmax(0)
+		)
+
+	return model
+
+def create_model_18(nb_inputs, nb_outputs, dropout = 0.5):
+	model = nn.Sequential(
+		nn.Linear(nb_inputs, 300),
+		nn.ReLU(),
+		nn.Linear(300, 300),
+		nn.ReLU(),
+		nn.Dropout(dropout),
+		nn.Linear(300, nb_outputs),
+		nn.Softmax(0)
+		)
+
+	return model
+
+def create_model_19(nb_inputs, nb_outputs, dropout = 0.5):
+	model = nn.Sequential(
+		nn.Linear(nb_inputs, 100),
+		nn.ReLU(),
+		nn.Linear(100, 100),
+		nn.ReLU(),
+		nn.Dropout(dropout),
+		nn.Linear(100, nb_outputs),
+		nn.Softmax(0)
+		)
+
+	return model
+
 def load_data_loaders(data_loaders_file):
 	print("load dataloaders")
 	data_loaders = pickle.load(open(data_loaders_file, "rb"))
 
 	return data_loaders
 
-def test_text_model(model, data_loaders, batch_size, epochs, model_num = ""):
+def test_text_model(model, data_loaders, batch_size, epochs, model_num = "", clip_gradient = False):
 	device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 	model.to(device)
 
@@ -280,7 +337,8 @@ def test_text_model(model, data_loaders, batch_size, epochs, model_num = ""):
 	optimizer = optim.Adam(model.parameters(), lr = 0.001)
 
 	print("train")
-	model, stats = train_model(model, data_loaders, dataset_sizes, batch_size, criterion, optimizer, num_epochs = epochs, device = device)
+	model, stats, lrstats = train_model(model, data_loaders, dataset_sizes, batch_size, criterion, optimizer, 
+										num_epochs = epochs, device = device, clip_gradient = clip_gradient)
 
 	print(stats)
 
@@ -297,31 +355,28 @@ def compare_models(nb_inputs, nb_outputs):
 	PLOT_DIR = "plots_text_model/"
 	
 	BATCH_SIZE = 64
-	EPOCHS = 50
+	EPOCHS = 200
 
-	#data_loaders_file = "dataloaders/encoded_text_data_loaders_{}.pickle".format(BATCH_SIZE)
-	data_loaders_file = "dataloaders/encoded_text_data_loaders_glove{}.pickle".format(BATCH_SIZE)
+	data_loaders_file = "dataloaders/encoded_text_data_loaders_{}.pickle".format(BATCH_SIZE)
+	#data_loaders_file = "dataloaders/encoded_text_data_loaders_glove{}.pickle".format(BATCH_SIZE)
 
 	data_loaders = load_data_loaders(data_loaders_file)
-
-	models = [create_model_10(nb_inputs, nb_outputs),
-			  create_model_2(nb_inputs, nb_outputs),
-			  create_model_3(nb_inputs, nb_outputs),
-			  create_model_4(nb_inputs, nb_outputs),
-			  create_model_5(nb_inputs, nb_outputs),
-			  create_model_11(nb_inputs, nb_outputs),
-			  create_model_12(nb_inputs, nb_outputs)
+	
+	models = [(create_model_10(nb_inputs, nb_outputs), "10", "no hidden layer", True),
+			  (create_model_17(nb_inputs, nb_outputs), "17", "no hidden layer dropout", True),
+			  (create_model_15(nb_inputs, nb_outputs), "15", "one hidden layer", True),
+			  (create_model_16(nb_inputs, nb_outputs), "16", "one hidden layer dropout", True),
+			  (create_model_2(nb_inputs, nb_outputs), "2", "shallow", True),
+			  (create_model_3(nb_inputs, nb_outputs), "3", "shallow dropout", True)
 			 ]
-
-	model_nums = ["10", "2", "3", "4", "5", "11", "12"]
-	model_names = ["no hidden layer", "shallow", "shallow dropout", "deep thin", "deep thin dropout", "deep large", "deep large dropout"]
+	
 
 	title = "Compare models"
-	file_name = "compare_models_glove"
+	file_name = "compare_models_clip_gradient"
 
-	for model, model_num, model_name in zip(models, model_nums, model_names):
+	for model, model_num, model_name, clip_gradient in models:
 		print("model {}".format(model_num))
-		stats = test_text_model(model, data_loaders, BATCH_SIZE, EPOCHS, model_num)
+		stats = test_text_model(model, data_loaders, BATCH_SIZE, EPOCHS, model_num, clip_gradient = clip_gradient)
 		plt.plot(stats.epochs['val'],  stats.accuracies['val'], label= model_name)
 		file_name += "_{}".format(model_num)
 

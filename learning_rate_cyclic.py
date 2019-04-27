@@ -6,7 +6,8 @@ from the methodology proposed by the autor of the cyclic learning rate
 """
 
 
-def train_model(model, dataloaders, dataset_sizes, batch_size, criterion, optimizer, scheduler = None, num_epochs=25, device="cpu", scheduler_step="cycle"):
+def train_model(model, dataloaders, dataset_sizes, batch_size, criterion, optimizer, scheduler = None, num_epochs=25, 
+                device="cpu", scheduler_step="cycle", clip_gradient = False, print_grad = False):
     since = time.time()
 
     best_model_wts = copy.deepcopy(model.state_dict())
@@ -68,6 +69,10 @@ def train_model(model, dataloaders, dataset_sizes, batch_size, criterion, optimi
                     # backward + optimize only if in training phase
                     if phase == 'train':
                         loss.backward()
+                        if clip_gradient:
+                            nn.utils.clip_grad_norm_(model.parameters(), 5)
+                        if print_grad:
+                            print("grad: {}".format(model[-1].weight.grad))
                         optimizer.step()
                         if(scheduler and scheduler_step == "batch"):
                             scheduler.batch_step()

@@ -1,15 +1,18 @@
 from testmodel import load_resnet, change_model
 import torch.nn as nn
 import torch
-from learning_rate_cyclic import train_model 
-from text_model import load_data_loaders
+from train_text_iterators import train_model
+from cnn_combined_data import create_combined_text_iterators
 import torch.optim as optim
 import matplotlib.pyplot as plt
-from text_model import create_model_3
-from combined_dataloaders import *
+from cnn_text_model import CnnTitleClassifier
+
+class IdentityModule(nnModule):
+    def forward(self, inputs):
+        return inputs
 
 class CombinedModel(nn.Module):
-	def __init__(self):
+	def __init__(self, text_model):
 		super().__init__()
 		resnet = 18
 		trained_layers = 10 
@@ -21,13 +24,10 @@ class CombinedModel(nn.Module):
 		removed = list(self.image_model.fc.children())[:-2]
 		self.image_model.fc = nn.Sequential(*removed)
 
-		self.text_model = create_model_3(4096, n_outputs)
-		self.text_model.load_state_dict(torch.load("text_models/final_text_model_adam.pt"))
-		removed = list(self.text_model.children())[:-2]
-		self.text_model = nn.Sequential(*removed)
-
-		self.join_layer = nn.Sequential(nn.Dropout(0.5),
-										nn.Linear(1256, n_outputs),
+		self.text_model = text_model
+		self.text_model.fc = IdentityModule()
+		
+		self.join_layer = nn.Sequential(nn.Linear(3 * self.text_model.out_channels + 256, n_outputs),
 										nn.Softmax(0)
 										)
 
@@ -42,36 +42,46 @@ class CombinedModel(nn.Module):
 
 		return self.join_layer(merged_output)
 
+def create_combined_model_iterators(train_csv_file, val_csv_file, test_csv_file, batch_size):
+	EMBEDDING_LENGTH = 300
+
+	TITLE, word_embedding, iterators = create_combined_text_iterators(train_csv_file, val_csv_file, test_csv_file, batch_size, num_workers = 0)
+	text_model = CnnTitleClassifier(len(TITLE.vocab), EMBEDDING_LENGTH, word_embedding)
+	text_model.load_state_dict(torch.load("text_models/cnn_final_text_model_adam.pt"))
+
+	model = CombinedModel(text_model)
+
+	return model, iterators
+
 def test_combined_model():
 	BATCH_SIZE = 32
-	EPOCHS = 20
+	EPOCHS = 5
 	LR = 0.001
 	MODEL_DIR = "combined_models/"
 	PLOT_DIR = "plots_combined_model/"
 
-	model = CombinedModel()
-	data_loaders = load_data_loaders("dataloaders/combined_data_loaders_{}.pickle".format(BATCH_SIZE))
+	model, iterators = create_combined_model_iterators(TRAIN_CSV_FILE, VAL_CSV_FILE, TEST_CSV_FILE, BATCH_SIZE)
 
 	device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 	model.to(device)
 
-	dataset_sizes = {phase: len(data_loader.dataset) for phase, data_loader in data_loaders.items()}
+	dataset_sizes = {key: len(iterator.data()) for key, iterator in iterators.items()}
 
 	criterion = nn.CrossEntropyLoss()
 	optimizer = optim.Adam(model.parameters(), lr = LR)
 
 	print("train")
-	model, stats, lrstats = train_model(model, data_loaders, dataset_sizes, BATCH_SIZE, criterion, optimizer, num_epochs = EPOCHS, device = device, clip_gradient = True)
+	model, stats, lrstats = train_model(model, data_loaders, dataset_sizes, BATCH_SIZE, criterion, optimizer, num_epochs = EPOCHS, device = device, combined = True)
 
 	print(stats)
 
-	torch.save(model.state_dict(), MODEL_DIR + "combined_model.pt")
+	torch.save(model.state_dict(), MODEL_DIR + "cnn_combined_model.pt")
 
 	plt.plot(stats.epochs['val'],  stats.accuracies['val'])
 	plt.xlabel('Epochs')
 	plt.ylabel('Accuracy')
 	plt.grid(True)
-	plt.savefig(PLOT_DIR + "combined_model.pdf")
+	plt.savefig(PLOT_DIR + "cnn_combined_model.pdf")
 
 	return model, stats, lrstats
 

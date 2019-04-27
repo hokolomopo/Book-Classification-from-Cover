@@ -2,7 +2,6 @@ import re
 import torch
 from torchtext import data
 from torchtext.vocab import Vectors, GloVe
-from torch.utils.data import DataLoader
 import pandas as pd
 
 class RawTextBookDataset(data.Dataset):
@@ -53,22 +52,22 @@ def create_raw_text_iterators(train_csv_file, val_csv_file, test_csv_file, batch
 
 		return title.split()
 
-	TITLE = data.Field(sequential = True, tokenize = tokenize, lower = True, include_lengths = True, batch_first = True, fix_length = MAX_LENGTH)
-	LABEL = data.Field(sequential = False)
+	TITLE = data.Field(sequential = True, tokenize = tokenize, lower = True, include_lengths = False, batch_first = True, fix_length = MAX_LENGTH)
+	LABEL = data.Field(sequential = False, is_target = True)
 
 	print("creating datasets")
 	train_set = RawTextBookDataset(TITLE, LABEL, train_csv_file)
 	val_set = RawTextBookDataset(TITLE, LABEL, val_csv_file)
 	test_set = RawTextBookDataset(TITLE, LABEL, test_csv_file)
 
-	TITLE.build_vocab(train_set, val_set, test_set)
+	TITLE.build_vocab(train_set, val_set, test_set, vectors = GloVe(name='6B', dim=300))
 	LABEL.build_vocab(train_set, val_set, test_set)
 
 	print("creating dataloaders")
 	iterators = {
 		"train": data.Iterator(train_set, batch_size, shuffle = True),
-		"val": data.Iterator(train_set, batch_size, shuffle = True),
-		"test": data.Iterator(train_set, batch_size, shuffle = True)
+		"val": data.Iterator(val_set, batch_size, shuffle = True),
+		"test": data.Iterator(test_set, batch_size, shuffle = True)
 	}
 
 	word_embedding = TITLE.vocab.vectors

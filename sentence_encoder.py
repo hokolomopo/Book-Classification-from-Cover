@@ -149,10 +149,10 @@ def save_text_data_loaders(pickle_file_name, batch_size, num_workers = 0, word_e
 	else:
 		print("Invalid word_emb arg")
 
-def save_final_text_data_loaders(pickle_file_name, batch_size, num_workers = 0, word_emb = "FastText"):
-	train_csv_path = "dataset/book30-listing-train_cleaned.csv"
-	val_csv_path = "dataset/book30-listing-test_cleaned.csv"
-	test_csv_path = "dataset/book30-listing-test_cleaned.csv"
+def save_text_10_classes_data_loaders(pickle_file_name, batch_size, num_workers = 0, word_emb = "FastText"):
+	train_csv_path = "dataset/train_set_cleaned_10.csv"
+	val_csv_path = "dataset/validation_set_cleaned_10.csv"
+	test_csv_path = "dataset/book30-listing-test_cleaned_10.csv"
 
 	data_loaders = create_text_data_loaders(train_csv_path, val_csv_path, test_csv_path, batch_size, num_workers, word_emb)
 	if data_loaders:
@@ -168,6 +168,7 @@ if __name__ == "__main__":
 	nltk.download('punkt')
 	
 	for batch_size in BATCH_SIZES:
+		"""
 		pickle_file_name = "dataloaders/encoded_text_data_loaders_{}.pickle".format(batch_size)
 		save_text_data_loaders(pickle_file_name, batch_size, 0)
 		pickle_file_name = "dataloaders/final_encoded_text_data_loaders_{}.pickle".format(batch_size)
@@ -177,3 +178,5 @@ if __name__ == "__main__":
 		save_text_data_loaders(pickle_file_name, batch_size, 0, "Glove")
 		pickle_file_name = "dataloaders/final_encoded_text_data_loaders_glove_{}.pickle".format(batch_size)
 		save_final_text_data_loaders(pickle_file_name, batch_size, 0, "Glove")
+		"""
+		save_text_10_classes_data_loaders("dataloaders/encoded_text_data_loaders_{}_10.pickle".format(batch_size), batch_size)
