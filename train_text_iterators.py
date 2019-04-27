@@ -1,6 +1,7 @@
 from testmodel import *
 
-def train_model(model, iterators, dataset_sizes, batch_size, criterion, optimizer, scheduler = None, num_epochs=25, device="cpu", scheduler_step="cycle"):
+def train_model(model, iterators, dataset_sizes, batch_size, criterion, optimizer, scheduler = None, num_epochs=25, 
+                device="cpu", scheduler_step="cycle", combined = False, clip_gradient = False):
     since = time.time()
 
     best_model_wts = copy.deepcopy(model.state_dict())
@@ -33,7 +34,11 @@ def train_model(model, iterators, dataset_sizes, batch_size, criterion, optimize
             start = time.time()
 
             for batch in iterators[phase]:
-                inputs = batch.title
+                if combined:
+                    inputs = (batch.cover, batch.title)
+                else:
+                    inputs = batch.title
+                
                 labels = batch.label
                 
                 progress += batch_size / dataset_sizes[phase] * 100
@@ -65,6 +70,8 @@ def train_model(model, iterators, dataset_sizes, batch_size, criterion, optimize
                     # backward + optimize only if in training phase
                     if phase == 'train':
                         loss.backward()
+                        if clip_gradient:
+                            nn.utils.clip_grad_norm_(model.parameters(), 5)
                         optimizer.step()
                         if(scheduler and scheduler_step == "batch"):
                             scheduler.batch_step()

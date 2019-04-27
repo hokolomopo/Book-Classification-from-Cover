@@ -119,12 +119,29 @@ def save_final_combined_data_loaders(pickle_file_name, batch_size, num_workers =
     else:
         print("Invalid word_emb arg")
 
+def save_combined_10_classes_data_loaders(pickle_file_name, batch_size, num_workers = 0, word_emb = "FastText"):
+    train_csv_path = "dataset/train_set_cleaned_10.csv"
+    val_csv_path = "dataset/validation_set_cleaned_10.csv"
+    test_csv_path = "dataset/book30-listing-test_cleaned_10.csv"
+
+    data_loaders = create_combined_data_loaders(train_csv_path, val_csv_path, test_csv_path, batch_size, num_workers, word_emb)
+    if data_loaders:
+        print("pickling dataloaders")
+        with open(pickle_file_name, "wb") as fp:
+            pickle.dump(data_loaders, fp)
+
+    else:
+        print("Invalid word_emb arg")
+
 if __name__ == "__main__":
     BATCH_SIZES = [4, 8, 16, 32, 64]
     nltk.download('punkt')
     
+    """
     for batch_size in BATCH_SIZES:
         pickle_file_name = "dataloaders/combined_data_loaders_{}.pickle".format(batch_size)
         save_combined_data_loaders(pickle_file_name, batch_size, 0)
         pickle_file_name = "dataloaders/final_combined_data_loaders_{}.pickle".format(batch_size)
         save_final_combined_data_loaders(pickle_file_name, batch_size, 0)
+    """
+    save_combined_10_classes_data_loaders("dataloaders/combined_data_loaders_32_10.pickle", 32)
