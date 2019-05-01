@@ -1,5 +1,8 @@
 from testmodel import *
 
+"""
+Train the model with cylcic learning rate
+"""
 def train_model(model, dataloaders, dataset_sizes, batch_size, criterion, optimizer, scheduler, num_epochs=25, device="cpu", scheduler_step="cycle"):
     since = time.time()
 

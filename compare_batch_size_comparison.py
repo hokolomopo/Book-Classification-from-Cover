@@ -1,5 +1,9 @@
 from testmodel import *
 
+
+"""
+Test the model for different size of batches
+"""
 if __name__ == "__main__":
     # plt.ion()   # interactive mode
     n_epoch = 10
