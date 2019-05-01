@@ -160,7 +160,7 @@ def train_model(model, dataloaders, dataset_sizes, batch_size, criterion, optimi
     return (model, stats)
 
 if __name__ == "__main__":
-    n_epoch = 30
+    n_epoch = 70
     batch_size = 64
     n_workers = 4
     resnet = 18
@@ -168,7 +168,7 @@ if __name__ == "__main__":
     n_outputs = 30
 
     finaLayer = "ReluDropoutSoftmax"
-    filename = "batch64"
+    filename = "adam"
 
     min_lr = 1e-4
     max_lr = 6e-3
@@ -193,8 +193,8 @@ if __name__ == "__main__":
     }
 
     cover_path = "dataset/covers"
-    csv_paths = {'train' : "dataset/book30-listing-train.csv",
-                 'val' : "dataset/book30-listing-test.csv"}
+    csv_paths = {'train' : "dataset/train_set.csv",
+                 'val' : "dataset/validation_set.csv"}
 
 
     image_datasets = {x: BookDataset(csv_paths[x], cover_path, transform=data_transforms[x])
@@ -217,12 +217,13 @@ if __name__ == "__main__":
 
     criterion = nn.CrossEntropyLoss()
 
-    optimizer_ft = optim.SGD(model_ft.parameters(), lr=min_lr, momentum=0.9)
+    # optimizer_ft = optim.SGD(model_ft.parameters(), lr=min_lr, momentum=0.9)
+    optimizer_ft = optim.Adam(model_ft.parameters(), lr = 1e-3)
 
     # exp_lr_scheduler = lr_scheduler.StepLR(optimizer_ft, step_size=7, gamma=0.1)
     exp_lr_scheduler = cyclic_sceduler.CyclicLR(optimizer_ft, mode='triangular', base_lr=min_lr, max_lr=max_lr, step_size=2 * dataset_sizes['train'] / batch_size)
 
-    model_ft, stats = train_model(model_ft, dataloaders, dataset_sizes, batch_size, criterion, optimizer_ft, exp_lr_scheduler,
+    model_ft, stats = train_model(model_ft, dataloaders, dataset_sizes, batch_size, criterion, optimizer_ft, None,
                         num_epochs=n_epoch, device=device, scheduler_step="batch")
 
     folder = ""
@@ -253,7 +254,7 @@ if __name__ == "__main__":
     plt.ylabel('Accuracy')
     plt.grid(True)
     plt.legend()
-    plt.savefig(folder +"graph/n_epoch_{}__Resnet{}__batch_size_{}__trained_layers_{}__n_outputs_{}__Accuracy.pdf".format(n_epoch, resnet, batch_size, trained_layers, n_outputs))
+    plt.savefig(folder +"cover_adam/n_epoch_{}__Resnet{}__batch_size_{}__trained_layers_{}__n_outputs_{}__Accuracy.pdf".format(n_epoch, resnet, batch_size, trained_layers, n_outputs))
 
     plt.figure(frameon  = False)
     for x in ['train', 'val']:
@@ -262,4 +263,6 @@ if __name__ == "__main__":
     plt.ylabel('losses')
     plt.grid(True)
     plt.legend()
-    plt.savefig(folder +"graph/n_epoch_{}__Resnet{}__batch_size_{}__trained_layers_{}__n_outputs_{}__Loss.pdf".format(n_epoch, resnet, batch_size, trained_layers, n_outputs))
+    plt.savefig(folder +"cover_adam/n_epoch_{}__Resnet{}__batch_size_{}__trained_layers_{}__n_outputs_{}__Loss.pdf".format(n_epoch, resnet, batch_size, trained_layers, n_outputs))
+
+    torch.save(model_ft.state_dict(), folder + "Adam")

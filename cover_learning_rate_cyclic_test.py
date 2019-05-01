@@ -129,8 +129,8 @@ if __name__ == "__main__":
     }
 
     cover_path = "dataset/covers"
-    csv_paths = {'train' : "dataset/book30-listing-train.csv",
-                 'val' : "dataset/book30-listing-test.csv"}
+    csv_paths = {'train' : "dataset/train_set.csv",
+                 'val' : "dataset/validation_set.csv"}
 
 
     image_datasets = {x: BookDataset(csv_paths[x], cover_path, transform=data_transforms[x])

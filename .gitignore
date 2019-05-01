@@ -145,7 +145,9 @@ cover_classifier/dataset/covers/*
 dataset/covers/*
 dataset/fastText/*
 data/*
-*.pickle
+*.pickle$
+gan_images/*
+cover_classifier/*
 .vector_cache/*
 *glove.6B*
 *.pt

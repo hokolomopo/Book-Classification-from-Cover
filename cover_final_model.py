@@ -1,5 +1,5 @@
 from testmodel import *
-
+import learning_rate_cyclic as lrc
 if __name__ == "__main__":
     n_epoch = 25
     batch_size = 64
@@ -30,8 +30,8 @@ if __name__ == "__main__":
     }
 
     cover_path = "dataset/covers"
-    csv_paths = {'train' : "dataset/book30-listing-train.csv",
-                 'val' : "dataset/book30-listing-test.csv"}
+    csv_paths = {'train' : "dataset/train_set.csv",
+                 'val' : "dataset/validation_set.csv"}
 
 
     image_datasets = {x: BookDataset(csv_paths[x], cover_path, transform=data_transforms[x])
@@ -60,8 +60,8 @@ if __name__ == "__main__":
 
     exp_lr_scheduler = cyclic_sceduler.CyclicLR(optimizer_ft, mode='triangular', base_lr=min_lr, max_lr=max_lr, step_size=2 * dataset_sizes['train'] / batch_size)
 
-    model_ft, stats = train_model(model_ft, dataloaders, dataset_sizes, batch_size, criterion, optimizer_ft, exp_lr_scheduler,
-                        num_epochs=n_epoch, device=device, scheduler_step="batch")
+    model_ft, stats = lrc.train_model(model_ft, dataloaders, dataset_sizes, batch_size, criterion, optimizer_ft, None,
+                        num_epochs=n_epoch, device=device, scheduler_step="batch", clip_gradient = True)
 
 
 
@@ -90,8 +90,8 @@ if __name__ == "__main__":
         plt.xlabel('Epochs')
         plt.ylabel('Accuracy')
         plt.grid(True)
-        plt.savefig(folder +"n_epoch_{}__Resnet{}__batch_size_{}__trained_layers_{}__n_outputs_{}__Loss_{}.pdf".format(n_epoch, resnet, batch_size, trained_layers, n_outputs,x))
+        plt.savefig(folder +"ClipGradn_epoch_{}__Resnet{}__batch_size_{}__trained_layers_{}__n_outputs_{}__Loss_{}.pdf".format(n_epoch, resnet, batch_size, trained_layers, n_outputs,x))
 
 
     # Save model
-    torch.save(model_ft.state_dict(), folder + "model{}".format(batch_size))
+    torch.save(model_ft.state_dict(), folder + "modelClipGradient{}".format(batch_size))
