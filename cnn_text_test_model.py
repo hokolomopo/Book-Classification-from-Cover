@@ -59,6 +59,9 @@ def print_acc(model, iterator, dataset_size, topK, batch_size, device):
         epoch_loss, epoch_acc))
 
 def test_text_model(topK):
+    """
+    Test title classification model with convolutionnal networks on the test set
+    """
 	TRAIN_CSV_FILE = "dataset/train_set_cleaned.csv"
 	VAL_CSV_FILE = "dataset/validation_set_cleaned.csv"
 	TEST_CSV_FILE = "dataset/book30-listing-test_cleaned.csv"
@@ -82,6 +85,10 @@ def test_text_model(topK):
 	print_acc(model, test_iterator, dataset_size, topK, BATCH_SIZE, device)
 
 def test_text_model_10(topK):
+    """
+    Test title classification model with convolutionnal networks on the test set
+    for the dataset with 10 classes
+    """
 	TRAIN_CSV_FILE = "dataset/train_set_cleaned_10.csv"
 	VAL_CSV_FILE = "dataset/validation_set_cleaned_10.csv"
 	TEST_CSV_FILE = "dataset/book30-listing-test_cleaned_10.csv"

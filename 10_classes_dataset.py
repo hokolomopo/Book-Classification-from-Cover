@@ -1,3 +1,7 @@
+"""
+Create the datasets with 10 classes from the 30 clases ones
+"""
+
 import pandas as pd
 
 classes = ["Children's Books",

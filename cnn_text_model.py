@@ -63,6 +63,10 @@ class CnnTitleClassifier(nn.Module):
 		return proba
 
 def create_model_iterators(train_csv_file, val_csv_file, test_csv_file, batch_size):
+	"""
+	Create model and iterator for text classification with convolutionnal networks
+	"""
+
 	EMBEDDING_LENGTH = 300
 
 	TITLE, word_embedding, iterators = create_raw_text_iterators(train_csv_file, val_csv_file, test_csv_file, batch_size)
@@ -71,6 +75,9 @@ def create_model_iterators(train_csv_file, val_csv_file, test_csv_file, batch_si
 	return model, iterators
 
 def test_model():
+	"""
+	Test the model
+	"""
 	TRAIN_CSV_FILE = "dataset/train_set_cleaned.csv"
 	VAL_CSV_FILE = "dataset/validation_set_cleaned.csv"
 	TEST_CSV_FILE = "dataset/book30-listing-test_cleaned.csv"

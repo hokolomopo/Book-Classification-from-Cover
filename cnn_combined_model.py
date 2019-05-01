@@ -8,10 +8,16 @@ import matplotlib.pyplot as plt
 from cnn_text_model import CnnTitleClassifier
 
 class IdentityModule(nnModule):
+	"""
+	Module that performs the identity function
+	"""
     def forward(self, inputs):
         return inputs
 
 class CombinedModel(nn.Module):
+	"""
+	model combining covers and text with the convolutionnal network
+	"""
 	def __init__(self, text_model):
 		super().__init__()
 		resnet = 18
@@ -43,6 +49,10 @@ class CombinedModel(nn.Module):
 		return self.join_layer(merged_output)
 
 def create_combined_model_iterators(train_csv_file, val_csv_file, test_csv_file, batch_size):
+	"""
+	Create iterators for combination of cover and title for convolutionnal network
+	"""
+	
 	EMBEDDING_LENGTH = 300
 
 	TITLE, word_embedding, iterators = create_combined_text_iterators(train_csv_file, val_csv_file, test_csv_file, batch_size, num_workers = 0)
@@ -54,6 +64,10 @@ def create_combined_model_iterators(train_csv_file, val_csv_file, test_csv_file,
 	return model, iterators
 
 def test_combined_model():
+	"""
+	Test the model
+	"""
+
 	BATCH_SIZE = 32
 	EPOCHS = 5
 	LR = 0.001

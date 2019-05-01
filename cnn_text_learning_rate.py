@@ -8,6 +8,10 @@ import matplotlib.pyplot as plt
 import os
 
 def test_learning_rates(model, iterators, batch_size, criterion, num_epochs = 25, device = "cpu", prefix = "cnn_"):
+	"""
+	Test learning rate for title classification with convolutionnal networks
+	for cyclic learning rate
+	"""
 	MIN_LR = 0.0001
 	MAX_LR = 0.1
 
@@ -37,6 +41,10 @@ def test_learning_rates(model, iterators, batch_size, criterion, num_epochs = 25
 	plt.savefig(PLOT_DIR + prefix + "text_learning_rate.pdf")
 
 def test_learning_rates_adam(model, iterators, batch_size, criterion, learning_rates, num_epochs = 25, device = "cpu", prefix = "cnn_"):
+	"""
+	Test learning rate for title classification with convolutionnal networks
+	for adam
+	"""
 	try:
 		os.mkdir("plots_text_model")
 	except:

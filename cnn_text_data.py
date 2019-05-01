@@ -44,6 +44,10 @@ class RawTextBookDataset(data.Dataset):
 		super().__init__(examples, fields)
 
 def create_raw_text_iterators(train_csv_file, val_csv_file, test_csv_file, batch_size, num_workers = 0):
+	"""
+	Create iterators for text classification with concolutionnal networks
+	"""
+	
 	MAX_LENGTH = 50
 
 	def tokenize(title):

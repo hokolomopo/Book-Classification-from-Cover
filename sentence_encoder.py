@@ -6,15 +6,11 @@ import pandas as pd
 import pickle
 
 class TextBookDataset(Dataset):
-	"""Book dataset."""
+	"""
+	Dataset for title classification
+	"""
 
 	def __init__(self, csv_file, datasetTransform, transform=None):
-		"""
-		Args:
-			csv_file (string): Path to the csv file with annotations.
-			transform (callable, optional): Optional transform to be applied
-				on a sample.
-		"""
 
 		cols = ["index", "filename", "url", "title", "author", "class", "class_name"]
 		self.dataset = pd.read_csv(csv_file, header = None, names = cols, encoding = "ISO-8859-1")
@@ -41,6 +37,9 @@ class TextBookDataset(Dataset):
 		return (torch.from_numpy(title).float(), label)
 
 class SentenceEmbedding():
+	"""
+	Embed sentences using Infersent and FastText word embedding
+	"""
 
 	def __init__(self, csvFiles):
 		"""
@@ -76,6 +75,9 @@ class SentenceEmbedding():
 		return transformedTitles
 
 class SentenceEmbeddingGlove():
+	"""
+	Embed sentences using Infersent and Glove word embedding
+	"""
 
 	def __init__(self, csvFiles):
 		"""
@@ -111,6 +113,9 @@ class SentenceEmbeddingGlove():
 		return transformedTitles
 
 def create_text_data_loaders(train_csv_file, val_csv_file, test_csv_file, batch_size, num_workers = 1, word_emb = "FastText"):
+	"""
+	Create dataloaders for title classification with InferSent
+	"""
 	if word_emb == "FastText":
 		datasetTransform = SentenceEmbedding([train_csv_file, val_csv_file, test_csv_file])
 	elif word_emb == "Glove":
@@ -136,6 +141,9 @@ def create_text_data_loaders(train_csv_file, val_csv_file, test_csv_file, batch_
 	return data_loaders
 
 def save_text_data_loaders(pickle_file_name, batch_size, num_workers = 0, word_emb = "FastText"):
+	"""
+	Save dataloaders for title classification with InferSent
+	"""
 	train_csv_path = "dataset/train_set_cleaned.csv"
 	val_csv_path = "dataset/validation_set_cleaned.csv"
 	test_csv_path = "dataset/book30-listing-test_cleaned.csv"
@@ -150,6 +158,10 @@ def save_text_data_loaders(pickle_file_name, batch_size, num_workers = 0, word_e
 		print("Invalid word_emb arg")
 
 def save_text_10_classes_data_loaders(pickle_file_name, batch_size, num_workers = 0, word_emb = "FastText"):
+	"""
+	Create dataloaders for title classification with InferSent
+	for 10 classes dataset
+	"""
 	train_csv_path = "dataset/train_set_cleaned_10.csv"
 	val_csv_path = "dataset/validation_set_cleaned_10.csv"
 	test_csv_path = "dataset/book30-listing-test_cleaned_10.csv"

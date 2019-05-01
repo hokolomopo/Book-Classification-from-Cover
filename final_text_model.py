@@ -10,6 +10,9 @@ import matplotlib.pyplot as plt
 import os
 
 def build_final_text_model_cyclic_lr():
+	"""
+	Build final model based on title with Infersent and cyclic learning rate
+	"""
 	MIN_LR = 0.0001
 	MAX_LR = 0.05
 	EPOCHS = 500
@@ -59,6 +62,9 @@ def build_final_text_model_cyclic_lr():
 	return model, stats, lrstats
 
 def build_final_text_model_adam():
+	"""
+	Build final model based on title with Infersent and Adam optimizer
+	"""
 	LR = 0.001
 	EPOCHS = 500
 	BATCH_SIZE = 64
@@ -103,6 +109,10 @@ def build_final_text_model_adam():
 	return model, stats, lrstats
 
 def build_10_classes_model():
+	"""
+	Build final model based on title with Infersent and Adam optimizer
+	on the 10 classes dataset
+	"""
 	LR = 0.001
 	EPOCHS = 500
 	BATCH_SIZE = 4
@@ -147,6 +157,9 @@ def build_10_classes_model():
 	return model, stats, lrstats
 
 def compare_adam_cyclic():
+	"""
+	Compare cyclic learning rate to Adam optimizer for text model with Infersent
+	"""
 	PLOT_DIR = "plots_text_model/"
 
 	cyclic_model, cyclic_stats, cyclic_lrstats = build_final_text_model_cyclic_lr()

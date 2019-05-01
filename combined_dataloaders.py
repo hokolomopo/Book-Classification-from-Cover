@@ -9,6 +9,9 @@ from torchvision import transforms
 from PIL import Image
 
 class CombinedBookDataset(Dataset):
+    """
+    dataloaders for cover and title with infersent
+    """
 
     def __init__(self, csv_file, datasetTransform, transform=None):
 
@@ -39,6 +42,10 @@ class CombinedBookDataset(Dataset):
         return ((cover, torch.from_numpy(title).float()), label)
 
 def create_combined_data_loaders(train_csv_file, val_csv_file, test_csv_file, batch_size, num_workers = 1, word_emb = "FastText"):
+    """
+    Create the dataloaders
+    """
+
     data_transforms = {
         'train': transforms.Compose([
             transforms.RandomResizedCrop(224),
@@ -85,6 +92,10 @@ def create_combined_data_loaders(train_csv_file, val_csv_file, test_csv_file, ba
     return data_loaders
 
 def save_combined_data_loaders(pickle_file_name, batch_size, num_workers = 0, word_emb = "FastText"):
+    """
+    Save the dataloaders
+    """
+
     train_csv_path = "dataset/train_set_cleaned.csv"
     val_csv_path = "dataset/validation_set_cleaned.csv"
     test_csv_path = "dataset/book30-listing-test_cleaned.csv"
@@ -98,21 +109,11 @@ def save_combined_data_loaders(pickle_file_name, batch_size, num_workers = 0, wo
     else:
         print("Invalid word_emb arg")
 
-def save_final_combined_data_loaders(pickle_file_name, batch_size, num_workers = 0, word_emb = "FastText"):
-    train_csv_path = "dataset/book30-listing-train_cleaned.csv"
-    val_csv_path = "dataset/book30-listing-test_cleaned.csv"
-    test_csv_path = "dataset/book30-listing-test_cleaned.csv"
-
-    data_loaders = create_combined_data_loaders(train_csv_path, val_csv_path, test_csv_path, batch_size, num_workers, word_emb)
-    if data_loaders:
-        print("pickling dataloaders")
-        with open(pickle_file_name, "wb") as fp:
-            pickle.dump(data_loaders, fp)
-
-    else:
-        print("Invalid word_emb arg")
-
 def save_combined_10_classes_data_loaders(pickle_file_name, batch_size, num_workers = 0, word_emb = "FastText"):
+    """
+    Save dataloaders for the 10 classes dataset
+    """
+    
     train_csv_path = "dataset/train_set_cleaned_10.csv"
     val_csv_path = "dataset/validation_set_cleaned_10.csv"
     test_csv_path = "dataset/book30-listing-test_cleaned_10.csv"

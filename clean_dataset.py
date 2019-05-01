@@ -1,3 +1,7 @@
+"""
+Make cleaned datasets, i.e. datasets where all the words in it are recognized by the word embeddings.
+"""
+
 import pandas as pd
 import nltk
 from InferSent.models import InferSent

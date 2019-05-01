@@ -5,6 +5,9 @@ import torch
 from sentence_encoder import *
 
 def test_text_model(topK):
+	"""
+	Test title classification model based on Infersent of the test set
+	"""
 	BATCH_SIZE = 64
 	print("creating model")
 	model = create_model_3(4096, 30)
@@ -24,6 +27,9 @@ def test_text_model(topK):
 	print_acc(model, test_dataloader, dataset_size, topK, BATCH_SIZE, device)
 
 def test_text_model_10(topK):
+	"""
+	Test title classification model based on Infersent of the test set for 10 classes dataset
+	"""
 	BATCH_SIZE = 64
 	print("creating model")
 	model = create_model_19(4096, 10)

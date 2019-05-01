@@ -5,7 +5,10 @@ from combined_dataloaders import *
 import sys
 import torch
 
-def test_text_model(topK):
+def test_combined_model(topK):
+	"""
+	Test the combined model on the test set
+	"""
 	BATCH_SIZE = 32
 	print("creating model")
 	model = CombinedModel()
@@ -24,7 +27,10 @@ def test_text_model(topK):
 	print("computing acc")
 	print_acc(model, test_dataloader, dataset_size, topK, BATCH_SIZE, device)
 
-def test_text_model_10(topK):
+def test_combined_model_10(topK):
+	"""
+	Test the combined model on the test set with 10 classes
+	"""
 	BATCH_SIZE = 32
 	print("creating model")
 	model = CombinedModel(10)
@@ -45,4 +51,4 @@ def test_text_model_10(topK):
 
 if __name__ == "__main__":
 	topK = int(sys.argv[1])
-	test_text_model_10(topK)
+	test_combined_model_10(topK)

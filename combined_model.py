@@ -9,6 +9,9 @@ from text_model import create_model_3, create_model_19
 from combined_dataloaders import *
 
 class CombinedModel(nn.Module):
+	"""
+	Model combining cover and title
+	"""
 	def __init__(self, n_outputs = 30):
 		super().__init__()
 		resnet = 18
@@ -43,6 +46,9 @@ class CombinedModel(nn.Module):
 		return self.join_layer(merged_output)
 
 def test_combined_model():
+	"""
+	Test and save final combined model
+	"""
 	BATCH_SIZE = 32
 	EPOCHS = 20
 	LR = 0.001
@@ -77,6 +83,9 @@ def test_combined_model():
 
 
 def test_combined_model_10():
+	"""
+	Test sans save final combined model for 10 classes dataset
+	"""
 	BATCH_SIZE = 4
 	EPOCHS = 20
 	LR = 0.001

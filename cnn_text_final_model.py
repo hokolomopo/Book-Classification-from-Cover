@@ -7,6 +7,11 @@ import cyclic_sceduler
 import matplotlib.pyplot as plt
 
 def build_final_text_model_cyclic_lr():
+	"""
+	Build final model for title classification with concolutionnal network with 
+	cyclic learning rate
+	"""
+
 	TRAIN_CSV_FILE = "dataset/train_set_cleaned.csv"
 	VAL_CSV_FILE = "dataset/validation_set_cleaned.csv"
 	TEST_CSV_FILE = "dataset/book30-listing-test_cleaned.csv"
@@ -60,6 +65,11 @@ def build_final_text_model_cyclic_lr():
 	return model, stats, lrstats
 
 def build_final_text_model_adam():
+	"""
+	Build final model for title classification with concolutionnal network with 
+	Adam optimizer
+	"""
+
 	TRAIN_CSV_FILE = "dataset/train_set_cleaned.csv"
 	VAL_CSV_FILE = "dataset/validation_set_cleaned.csv"
 	TEST_CSV_FILE = "dataset/book30-listing-test_cleaned.csv"
@@ -108,6 +118,11 @@ def build_final_text_model_adam():
 	return model, stats, lrstats
 
 def build_final_text_model_adam_10():
+	"""
+	Build final model for title classification with concolutionnal network with 
+	Adam optimizer for the 10 classes dataset
+	"""
+
 	TRAIN_CSV_FILE = "dataset/train_set_cleaned_10.csv"
 	VAL_CSV_FILE = "dataset/validation_set_cleaned_10.csv"
 	TEST_CSV_FILE = "dataset/book30-listing-test_cleaned_10.csv"
@@ -156,6 +171,10 @@ def build_final_text_model_adam_10():
 	return model, stats, lrstats
 
 def compare_adam_cyclic():
+	"""
+	Compare the results obtained with Adam optimizer and cyclic learning rate
+	"""
+
 	PLOT_DIR = "plots_text_model/"
 
 	adam_model, adam_stats, adam_lrstats = build_final_text_model_adam()

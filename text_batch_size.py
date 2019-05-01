@@ -9,6 +9,9 @@ import matplotlib.pyplot as plt
 from text_model import create_model_3, load_data_loaders
 
 def test_batch_sizes(model, batch_sizes, criterion, optimizer, scheduler = None, num_epochs=25, device="cpu", model_name = "text_model", glove = False):
+	"""
+	Test different batch sizes for title classification using InferSent and Adam optimizer
+	"""
 	try:
 		os.mkdir("plots_text_model")
 	except:
@@ -40,6 +43,9 @@ def test_batch_sizes(model, batch_sizes, criterion, optimizer, scheduler = None,
 	plt.savefig(PLOT_DIR + file_name + ".pdf")
 
 def test_batch_sizes_cyclic_lr(model, batch_sizes, criterion, optimizer, min_lr, max_lr, cycle_length, num_epochs=25, device="cpu", model_name = "text_model", glove = False):
+	"""
+	Test different batch sizes for title classification using InferSent and cyclic learning rate
+	"""
 	try:
 		os.mkdir("plots_text_model")
 	except:

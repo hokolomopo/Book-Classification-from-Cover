@@ -8,6 +8,9 @@ from sentence_encoder import *
 import matplotlib.pyplot as plt
 
 def test_batch_sizes(batch_sizes, criterion, scheduler = None, num_epochs=25, device="cpu", model_name = "cnn_text_model"):
+	"""
+	Test the batch size for concolutionnal network for text
+	"""
 	TRAIN_CSV_FILE = "dataset/train_set_cleaned.csv"
 	VAL_CSV_FILE = "dataset/validation_set_cleaned.csv"
 	TEST_CSV_FILE = "dataset/book30-listing-test_cleaned.csv"

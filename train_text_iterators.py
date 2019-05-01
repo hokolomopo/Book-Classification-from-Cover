@@ -2,6 +2,9 @@ from testmodel import *
 
 def train_model(model, iterators, dataset_sizes, batch_size, criterion, optimizer, scheduler = None, num_epochs=25, 
                 device="cpu", scheduler_step="cycle", combined = False, clip_gradient = False):
+    """
+    Train model using torch text iterators
+    """
     since = time.time()
 
     best_model_wts = copy.deepcopy(model.state_dict())

@@ -38,6 +38,9 @@ class CombinedRawTextBookDataset(data.Dataset):
 		title_field.preprocessing = data.Pipeline(clean_str)
 
 		def cover_preprocessing(img_name):
+			"""
+			Preprocess cover features
+			"""
 			cover = Image.open(img_name)
 			print("after open: ".format(cover))
 			print(type(cover))
@@ -64,6 +67,9 @@ class CombinedRawTextBookDataset(data.Dataset):
 		super().__init__(examples, fields)
 
 def create_combined_text_iterators(train_csv_file, val_csv_file, test_csv_file, batch_size, num_workers = 0, validation = True):
+	"""
+	Create iterators with cover and title for the convolutionna network
+	"""
 	MAX_LENGTH = 50
 
 	def tokenize(title):

@@ -9,6 +9,9 @@ import matplotlib.pyplot as plt
 import os
 
 def test_learning_rates(model, dataloaders, batch_size, criterion, num_epochs = 25, device = "cpu", prefix = ""):
+	"""
+	Test learning rate bounds for cyclic learning rate for title classifciation with InferSent
+	"""
 	MIN_LR = 0.0001
 	MAX_LR = 0.1
 
@@ -38,6 +41,9 @@ def test_learning_rates(model, dataloaders, batch_size, criterion, num_epochs = 
 	plt.savefig(PLOT_DIR + prefix + "text_learning_rate.pdf")
 
 def test_learning_rates_adam(model, dataloaders, batch_size, criterion, learning_rates, num_epochs = 25, device = "cpu", prefix = ""):
+	"""
+	Test learning rate bounds for Adam optimizer for title classifciation with InferSent
+	"""
 	try:
 		os.mkdir("plots_text_model")
 	except:

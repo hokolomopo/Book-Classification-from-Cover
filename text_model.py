@@ -7,6 +7,10 @@ import os
 from sentence_encoder import SentenceEmbedding
 from matplotlib import pyplot as plt
 
+"""
+Define several models to try to put on top of Infersent
+"""
+
 def create_model_1(nb_inputs, nb_outputs):
 	model = nn.Sequential(
 		nn.Linear(nb_inputs, 300),
@@ -320,12 +324,18 @@ def create_model_19(nb_inputs, nb_outputs, dropout = 0.5):
 	return model
 
 def load_data_loaders(data_loaders_file):
+	"""
+	Load saved dataloaders
+	"""
 	print("load dataloaders")
 	data_loaders = pickle.load(open(data_loaders_file, "rb"))
 
 	return data_loaders
 
 def test_text_model(model, data_loaders, batch_size, epochs, model_num = "", clip_gradient = False, print_grad = False):
+	"""
+	Test a model
+	"""
 	device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 	model.to(device)
 
@@ -348,6 +358,9 @@ def test_text_model(model, data_loaders, batch_size, epochs, model_num = "", cli
 	return stats
 
 def compare_models(nb_inputs, nb_outputs):
+	"""
+	Compare different models
+	"""
 	try:
 		os.mkdir("plots_text_model")
 	except:
@@ -359,7 +372,6 @@ def compare_models(nb_inputs, nb_outputs):
 	EPOCHS = 200
 
 	data_loaders_file = "dataloaders/encoded_text_data_loaders_{}.pickle".format(BATCH_SIZE)
-	#data_loaders_file = "dataloaders/encoded_text_data_loaders_glove{}.pickle".format(BATCH_SIZE)
 
 	data_loaders = load_data_loaders(data_loaders_file)
 	
@@ -388,6 +400,9 @@ def compare_models(nb_inputs, nb_outputs):
 	plt.savefig(PLOT_DIR + file_name + ".pdf")
 
 def compare_dropout(nb_inputs, nb_outputs):
+	"""
+	Compare drop out values
+	"""
 	try:
 		os.mkdir("plots_text_model")
 	except:
@@ -417,6 +432,9 @@ def compare_dropout(nb_inputs, nb_outputs):
 	plt.savefig(PLOT_DIR + "compare_dropout.pdf")
 
 def perform_test():
+	"""
+	Test a model
+	"""
 	NB_INPUTS = 4096
 	NB_OUTPUTS = 30
 	BATCH_SIZE = 64
@@ -435,7 +453,6 @@ if __name__ == "__main__":
 	
 	perform_test()
 	#compare_models(NB_INPUTS, NB_OUTPUTS)
-
 	#compare_dropout(NB_INPUTS, NB_OUTPUTS)
 
 	

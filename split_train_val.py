@@ -1,3 +1,7 @@
+"""
+Split train set into train and validation set
+"""
+
 import pandas as pd
 from sklearn.model_selection import train_test_split
 
