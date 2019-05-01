@@ -75,7 +75,11 @@ def print_acc(model, dataloader, dataset_size, topK, batch_size, device):
             myAcc += getKsAccs(outputs, labels, topK)
 
         # statistics
-        running_loss += loss.item() * inputs.size(0)
+        if type(inputs) is list or type(inputs) is tuple:
+            running_loss += loss.item() * sum([input.size(0) for input in inputs])
+        else:
+            running_loss += loss.item() * inputs.size(0)
+
         running_corrects += torch.sum(preds == labels.data)
         
 

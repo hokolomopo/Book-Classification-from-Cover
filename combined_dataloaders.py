@@ -9,15 +9,8 @@ from torchvision import transforms
 from PIL import Image
 
 class CombinedBookDataset(Dataset):
-    """Book dataset."""
 
     def __init__(self, csv_file, datasetTransform, transform=None):
-        """
-        Args:
-            csv_file (string): Path to the csv file with annotations.
-            transform (callable, optional): Optional transform to be applied
-                on a sample.
-        """
 
         cols = ["index", "filename", "url", "title", "author", "class", "class_name"]
         self.dataset = pd.read_csv(csv_file, header = None, names = cols, encoding = "ISO-8859-1")
@@ -137,11 +130,10 @@ if __name__ == "__main__":
     BATCH_SIZES = [4, 8, 16, 32, 64]
     nltk.download('punkt')
     
-    """
     for batch_size in BATCH_SIZES:
         pickle_file_name = "dataloaders/combined_data_loaders_{}.pickle".format(batch_size)
         save_combined_data_loaders(pickle_file_name, batch_size, 0)
         pickle_file_name = "dataloaders/final_combined_data_loaders_{}.pickle".format(batch_size)
         save_final_combined_data_loaders(pickle_file_name, batch_size, 0)
-    """
-    save_combined_10_classes_data_loaders("dataloaders/combined_data_loaders_32_10.pickle", 32)
+        pickle_file_name = "dataloaders/combined_data_loaders_{}_10.pickle".format(batch_size)
+        save_combined_10_classes_data_loaders(pickle_file_name, batch_size)

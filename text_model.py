@@ -325,7 +325,7 @@ def load_data_loaders(data_loaders_file):
 
 	return data_loaders
 
-def test_text_model(model, data_loaders, batch_size, epochs, model_num = "", clip_gradient = False):
+def test_text_model(model, data_loaders, batch_size, epochs, model_num = "", clip_gradient = False, print_grad = False):
 	device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 	model.to(device)
 
@@ -338,7 +338,8 @@ def test_text_model(model, data_loaders, batch_size, epochs, model_num = "", cli
 
 	print("train")
 	model, stats, lrstats = train_model(model, data_loaders, dataset_sizes, batch_size, criterion, optimizer, 
-										num_epochs = epochs, device = device, clip_gradient = clip_gradient)
+										num_epochs = epochs, device = device, clip_gradient = clip_gradient,
+										print_grad = print_grad)
 
 	print(stats)
 
@@ -415,11 +416,25 @@ def compare_dropout(nb_inputs, nb_outputs):
 	plt.legend()
 	plt.savefig(PLOT_DIR + "compare_dropout.pdf")
 
+def perform_test():
+	NB_INPUTS = 4096
+	NB_OUTPUTS = 30
+	BATCH_SIZE = 64
+	EPOCHS = 5
+
+	data_loaders_file = "dataloaders/encoded_text_data_loaders_{}.pickle".format(BATCH_SIZE)
+
+	data_loaders = load_data_loaders(data_loaders_file)
+	model = create_model_12(NB_INPUTS, NB_OUTPUTS)
+
+	test_text_model(model, data_loaders, BATCH_SIZE, EPOCHS, clip_gradient = True, print_grad = True)
+
 if __name__ == "__main__":
 	NB_INPUTS = 4096
 	NB_OUTPUTS = 30
 	
-	compare_models(NB_INPUTS, NB_OUTPUTS)
+	perform_test()
+	#compare_models(NB_INPUTS, NB_OUTPUTS)
 
 	#compare_dropout(NB_INPUTS, NB_OUTPUTS)
 

@@ -72,7 +72,7 @@ def train_model(model, dataloaders, dataset_sizes, batch_size, criterion, optimi
                         if clip_gradient:
                             nn.utils.clip_grad_norm_(model.parameters(), 5)
                         if print_grad:
-                            print("grad: {}".format(model[-1].weight.grad))
+                            print("grad: {}".format(model[-2].weight.grad))
                         optimizer.step()
                         if(scheduler and scheduler_step == "batch"):
                             scheduler.batch_step()
