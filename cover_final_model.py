@@ -1,5 +1,9 @@
 from testmodel import *
 import learning_rate_cyclic as lrc
+
+"""
+Train the final model 
+"""
 if __name__ == "__main__":
     n_epoch = 25
     batch_size = 64

@@ -1,5 +1,8 @@
 from testmodel import *
 
+"""
+Order predictions from most probable to least probable
+"""
 def getPredInOrder(preds):
     res = []
 
@@ -10,6 +13,9 @@ def getPredInOrder(preds):
 
     return res
 
+"""
+Get the top-k accuracy
+"""
 def getKsAccs(preds, labels, topK):
     labels = labels.cpu()
     labels = np.asarray(labels)
@@ -38,6 +44,9 @@ def getKsAccs(preds, labels, topK):
 
     return accs[topK - 1]
 
+"""
+Print the top-k accuracy
+"""
 def print_acc(model, dataloader, dataset_size, topK, batch_size, device):
     criterion = nn.CrossEntropyLoss()
 
